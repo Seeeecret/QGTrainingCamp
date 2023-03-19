@@ -1,21 +1,9 @@
 #include "SinglyLinkedListADT.h"
-
+#include "SinglyLinkedListADTMenu.h"
 
 
 
 int main() {
-	List head = createEmptyList();
-	Item enterData;
-	while (scanf("%9d",&enterData.data))
-	{
-		addNewNode(head, enterData);
-	}
-	printList(head);
-	recursiveReverse(head);
-	puts("");
-	printList(head);
-		puts("");
-		pointerReverse(head);
-		printList(head);
+	Operation();
 	return 0;
 }
