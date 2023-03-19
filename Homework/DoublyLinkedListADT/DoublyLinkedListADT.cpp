@@ -1,29 +1,12 @@
 ﻿// DoublyLinkedListADT.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
-
+#define _CRT_SECURE_NO_WARNINGS 1
 #include <iostream>
-#include "DoublyLinkedListADT.h"
+#include "DoublyLinkedListADTMenu.h"
 
 int main()
 {
-	List* list;
-	initList(list);
-
-	addAtHead(list, 1);
-	addAtHead(list, 2);
-	addAtTail(list, 3);
-	addAtTail(list, 4);
-
-	printf("Original list: ");
-	printList(list);
-
-	deleteAtHead(list);
-	printf("After deleting head node: ");
-	printList(list);
-
-	deleteAtHead(list);
-	printf("After deleting tail node: ");
-	printList(list);
+	Operation();
 
 	return 0;
 }

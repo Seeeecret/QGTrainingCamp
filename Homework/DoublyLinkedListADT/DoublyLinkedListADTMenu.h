@@ -1,5 +1,6 @@
 #define UPKEY 72//键入上键的第二个值
 #define DOWNKEY 80//键入下键的第二个值, 二者第一个值是相同的
+#define _CRT_SECURE_NO_WARNINGS 1
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -27,22 +28,22 @@ void Menu()
 {
     printf("                                  欢迎师兄来到双向链表测试系统                               \n");
     printf("*******************************************************************************************\n");
-    printf("*                0) 新建一个空的双向链表                                              *\n");
+    printf("*                0) 新建一个空的双向链表                                                  *\n");
     printf("*                1) 往双向链表末尾增加节点                                                *\n");
-    printf("*                2) 往双向链表头部增加节点                                         *\n");
-    printf("*                3) 删除双向链表尾部的节点                                           *\n");
-    printf("*                4) 删除双向链表头部的节点                                                            *\n");
-    printf("*                5) 输出打印双向链表的所有数据                                                        *\n");    
-    printf("*                6) 找到单链表的中点并输出数据                                            *\n");
+    printf("*                2) 往双向链表头部增加节点                                                *\n");
+    printf("*                3) 删除双向链表尾部的节点                                                *\n");
+    printf("*                4) 删除双向链表头部的节点                                                *\n");
+    printf("*                5) 输出打印双向链表的所有数据                                            *\n");    
+    printf("*                6) 找到双向链表的中点并输出数据                                          *\n");
     printf("*                7) 判断链表是否成环                                                      *\n");
-    printf("*                8) 删除指定                                                        *\n");
-    printf("*                9) 指针法反转链表                                                        *\n");
-    printf("*                A) 完全清空并删除单链表                                                  *\n");
+    printf("*                8) 删除指定位置的节点                                                    *\n");
+    printf("*                9) 在指定位置插入节点                                                    *\n");
+    printf("*                A) 完全清空并删除双链表                                                  *\n");
     printf("*                B) 退出程序                                                              *\n");
     printf("*******************************************************************************************\n");
     printf("请使用↑、↓和enter来实现选择和执行命令，或者输入每个命令前面的代号来执行命令<0 - 9><A - B>\n");
     printf("                     在菜单主页面且未操作菜单时键入'q'或'Q'退出程序\n");
-    printf("                     本系统单链表头结点空置，从第二个节点开始存储数据");
+    printf("                   本系统双向链表头尾节点均存储数据，且有维护头尾结点地址为函数作优化");
     return;
 }
 void CursorPos1(int x)
@@ -50,37 +51,37 @@ void CursorPos1(int x)
     switch (x)
     {
     case 0:
-        printf("*                0) 新建一个空头指针单链表                                                *\n");
+        printf("*                0) 新建一个空的双向链表                                                  *\n");
         break;
     case 1:
-        printf("*                1) 往单链表末尾中增加节点                                                *\n");
+        printf("*                1) 往双向链表末尾增加节点                                                *\n");
         break;
     case 2:
-        printf("*                2) 往单链表的指定位置处插入节点                                          *\n");
+        printf("*                2) 往双向链表头部增加节点                                                *\n");
         break;
     case 3:
-        printf("*                3) 删除单链表指定位置处的节点                                            *\n");
+        printf("*                3) 删除双向链表尾部的节点                                                *\n");
         break;
     case 4:
-        printf("*                4) 打印单链表                                                            *\n");
+        printf("*                4) 删除双向链表头部的节点                                                *\n");
         break;
     case 5:
-        printf("*                5) 单链表奇偶调换                                                        *\n");
+        printf("*                5) 输出打印双向链表的所有数据                                            *\n");
         break;
     case 6:
-        printf("*                6) 找到单链表的中点并输出数据                                            *\n");
+        printf("*                6) 找到双向链表的中点并输出数据                                          *\n");
         break;
     case 7:
         printf("*                7) 判断链表是否成环                                                      *\n");
         break;
     case 8:
-        printf("*                8) 递归法反转链表                                                        *\n");
+        printf("*                8) 删除指定位置的节点                                                    *\n");
         break;
     case 9:
-        printf("*                9) 指针法反转链表                                                        *\n");
+        printf("*                9) 在指定位置插入节点                                                    *\n");
         break;
     case 10:
-        printf("*                A) 完全清空并删除单链表                                                  *\n");
+        printf("*                A) 完全清空并删除双链表                                                  *\n");
         break;
     case 11:
         printf("*                B) 退出程序                                                              *\n");
@@ -143,7 +144,7 @@ int CursorOpr(int line, int deta, int lower, int upper, void (*p)(int))
 }
 
 void Operation() {
-    List orginList = NULL;
+    List* orginList = NULL;
     int n = 0, line = 2; // 对应menu()的0)
     char c1;
     IN_DEFAULT;
@@ -196,18 +197,18 @@ void Operation() {
         switch (n) {
         case 0: {
             Gotoxy(0, 19);//
-            if (orginList == NULL) orginList = createEmptyList();
-            else puts("You have already created a singlylinkedlist");
+            if (orginList == NULL) initList(&orginList);
+            else puts("You have already created a doublylinkedlist");
             system("pause");
             break;    
         }
         case 1: {
             Gotoxy(0, 19);
-            Item enterData;//新增节点
+            Item enterData = 0;//新增节点
             puts("Please enter intger,otherwise function will quit:");
             while (scanf("%9d", &enterData.data))
             {
-                addNewNode(orginList, enterData);
+                addAtTail(orginList, enterData);
             }
             fflush(stdin);
             rewind(stdin);
@@ -216,34 +217,43 @@ void Operation() {
         }
         case 2: {//
             Gotoxy(0, 19);
-            Item enterData2;//插入节点
-            int index = 0;
-            puts("Please enter in format:\n \"INDEX DATA\"");
-            if (scanf("%9d %9d", &index, &enterData2.data) == 2) insertNewNode(orginList, index, enterData2);
+            Item enterData = 0;//新增节点
+            puts("Please enter intger,otherwise function will quit:");
+            while (scanf("%9d", &enterData.data))
+            {
+                addAtHead(orginList, enterData);
+            }
+            fflush(stdin);
+            rewind(stdin);
             system("pause");
             break;
+            //puts("Please enter in format:\n \"INDEX DATA\"");
+            //if (scanf("%9d %9d", &index, &enterData2.data) == 2) insertNewNode(orginList, index, enterData2);
+           // system("pause");
+           // break;
         }
         case 3: {
             Gotoxy(0, 19);
-            int index = 0;
-            puts("Please enter the index:");//删除节点
-            if (scanf("%9d", &index) == 1 && deleteNode(orginList, index)) puts("Successfully Deleting");
-            else puts("Failing to delete");
+            deleteAtTail(orginList);
+           // int index = 0;
+            //puts("Please enter the index:");//删除节点
+            //if (scanf("%9d", &index) == 1 && deleteNode(orginList, index)) puts("Successfully Deleting");
+            //else puts("Failing to delete");
             system("pause");
             break;
         }
         case 4: {
             Gotoxy(0, 19);
-            printList(orginList);//打印链表
+            deleteAtHead(orginList);
             system("pause");
-            fflush(stdin);
-            rewind(stdin);
             break;
         }
         case 5: {
             Gotoxy(0, 19);
-            swapEvenNodeOddNode(orginList);//奇偶交换
+            printList(orginList);//打印链表
             system("pause");
+            fflush(stdin);
+            rewind(stdin);
             break;
         }
         case 6: {
@@ -268,13 +278,19 @@ void Operation() {
         }
         case 8: {
             Gotoxy(0, 19);
-            recursiveReverse(orginList);//递归反转
+            int index = 0;
+            puts("Please enter the index:");//删除节点
+            if (scanf("%9d", &index) == 1 && deleteAtIndex(orginList, index)) puts("Successfully Deleting");
+            else puts("Failing to delete");
             system("pause");
             break;
         }
         case 9: {//
             Gotoxy(0, 19);
-            pointerReverse(orginList);//指针反转
+            int index = 0;
+            Item enterData2 = 0;
+            puts("Please enter in format:\n \"INDEX DATA\"");//插入节点
+            if (scanf("%9d %9d", &index, &enterData2.data) == 2) insertAtIndex(orginList, index, enterData2);
             system("pause");
             break;
         }
