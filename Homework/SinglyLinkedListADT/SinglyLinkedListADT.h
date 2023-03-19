@@ -48,13 +48,13 @@ unsigned int getListLength(const List head) {//结点个数的计数函数
 
 bool addNewNode(const List head, Item newItem) {
     if (isNULL(head)) {
-        fprintf(stderr, "NullPointerException! Try again!\n");
+        fprintf(stderr, "NullPointerException! Enter something except integer to quit!\n");
         fflush(stdin);
         rewind(stdin);
         return false;
     }
     else if (isFull()) {
-        fprintf(stderr, "MemoryAllocationException! Try again!\n");
+        fprintf(stderr, "MemoryAllocationException! Enter something except integer to quit!\n");
         return false;
     }
     else {
@@ -73,15 +73,15 @@ bool addNewNode(const List head, Item newItem) {
 
 bool insertNewNode(List head, int index, Item newItem) {//在某位置插入节点，原节点后移
     if (isNULL(head)) {
-        fprintf(stderr, "NullPointerException! Try again!\n");
+        fprintf(stderr, "NullPointerException! Enter something except integer to quit!\n");
         return false;
     }
     else if (isFull()) {
-    fprintf(stderr, "MemoryAllocationException! Try again!\n");
+    fprintf(stderr, "MemoryAllocationException! Enter something except integer to quit!\n");
     return false;
     }
     else if (index < 1 || index > getListLength(head)) {
-        fprintf(stderr, "IndexOutOfBoundException! Try again!\n");
+        fprintf(stderr, "IndexOutOfBoundException! Enter something except integer to quit!\n");
         return false;
     }
     else {
@@ -142,22 +142,6 @@ void deleteList(List* head) {//清空链表
 bool equalItem(Item item1, Item item2) {//判断item1  item2是否相等
     return item1.data == item2.data;
 }
-/*
-void emptyFunction(Item item) {
-    return;
-}
-
-bool traverseTo(const List head, void(*pfunc)(Item item), Item target) {//遍历到符合条件abc的节点,执行pfunc()函数
-    Node* tempNode = head;
-    while (tempNode != NULL) {
-        if (equalItem(tempNode->item,target)) {
-            (*pfunc)(tempNode->item);
-            return true;
-        }
-        tempNode = tempNode->next;
-    }
-    return false;
-}*/
 
 Node* searchNode(const List head, Item target) {//搜索链表中是否有节点item与target相等，若有,返回节点指针
     if (isNULL(head)) {//这个功能没在系统中做出来，时间不够了
@@ -216,6 +200,7 @@ void swapEvenNodeOddNode(List head) {//奇偶交换
         else next = cur->next;
     }
 }
+
 Node* findMiddle(List head) {
      // 如果链表为空，报错
     if (isNULL(head)) {
@@ -224,7 +209,7 @@ Node* findMiddle(List head) {
     } 
     else if (head->next == NULL) {
     // 如果只有一个节点，直接返回头节点
-        return head;
+        return NULL;
     }
     // 定义快慢指针并初始化为头节点
     Node* fast = head;
@@ -287,6 +272,10 @@ void recursiveReverse(List head) {
         fprintf(stderr, "NullPointerException! Try again!\n");
         return;
     }
+    else if (isNULL(head->next)) {
+        fprintf(stderr, "EmptyListException! Try again!\n");
+        return;
+    }
     List recursiveHead = head->next;
     head->next = recursive(recursiveHead);
 }
@@ -314,6 +303,10 @@ void pointerReverse(List head) {
     // 如果链表为空，报错并返回head
     if (isNULL(head)) {
         fprintf(stderr, "NullPointerException! Try again!\n");
+        return;
+    }
+    else if (isNULL(head->next)) {
+        fprintf(stderr, "EmptyListException! Try again!\n");
         return;
     }
     List pointerHead = head->next;

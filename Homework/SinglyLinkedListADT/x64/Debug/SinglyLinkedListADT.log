@@ -3,5 +3,4 @@ C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\SinglyLinkedListA
 C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\SinglyLinkedListADT\SinglyLinkedListADT.h(108,33): warning C4018: “>”: 有符号/无符号不匹配
 C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\SinglyLinkedListADT\SinglyLinkedListADTMenu.h(93,19): warning C4838: 从“int”转换到“SHORT”需要收缩转换
 C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\SinglyLinkedListADT\SinglyLinkedListADTMenu.h(93,22): warning C4838: 从“int”转换到“SHORT”需要收缩转换
-C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\SinglyLinkedListADT\SinglyLinkedListADTMenu.h(254,24): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“Item”
   SinglyLinkedListADT.vcxproj -> C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\SinglyLinkedListADT\x64\Debug\SinglyLinkedListADT.exe

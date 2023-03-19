@@ -27,7 +27,7 @@ void Menu()
 {
     printf("                                  欢迎师兄来到单链表测试系统                               \n");
     printf("*******************************************************************************************\n");
-    printf("*                0) 新建一个单链表                                                        *\n");
+    printf("*                0) 新建一个空头指针的单链表                                              *\n");
     printf("*                1) 往单链表末尾中增加节点                                                *\n");
     printf("*                2) 往单链表的指定位置处插入节点                                          *\n");
     printf("*                3) 删除单链表指定位置处的节点                                            *\n");
@@ -37,7 +37,7 @@ void Menu()
     printf("*                7) 判断链表是否成环                                                      *\n");
     printf("*                8) 递归法反转链表                                                        *\n");
     printf("*                9) 指针法反转链表                                                        *\n");
-    printf("*                A) 清空并删除单链表                                                      *\n");
+    printf("*                A) 完全清空并删除单链表                                                  *\n");
     printf("*                B) 退出程序                                                              *\n");
     printf("*******************************************************************************************\n");
     printf("请使用↑、↓和enter来实现选择和执行命令，或者输入每个命令前面的代号来执行命令<0 - 9><A - B>\n");
@@ -50,7 +50,7 @@ void CursorPos1(int x)
     switch (x)
     {
     case 0:
-        printf("*                0) 新建一个单链表                                                        *\n");
+        printf("*                0) 新建一个空头指针单链表                                                *\n");
         break;
     case 1:
         printf("*                1) 往单链表末尾中增加节点                                                *\n");
@@ -80,7 +80,7 @@ void CursorPos1(int x)
         printf("*                9) 指针法反转链表                                                        *\n");
         break;
     case 10:
-        printf("*                A) 清空并删除单链表                                                      *\n");
+        printf("*                A) 完全清空并删除单链表                                                  *\n");
         break;
     case 11:
         printf("*                B) 退出程序                                                              *\n");
@@ -251,7 +251,7 @@ void Operation() {
             Node* tempNode;
             if ((tempNode = findMiddle(orginList)) != NULL) {//查找中点
                 puts("Successfully Finding");
-                printf("Data is %d\n", tempNode->item);
+                printf("Data is %d\n", tempNode->item.data);
             }
             else puts("Failing to find");
             system("pause");
