@@ -9,27 +9,27 @@ typedef struct item {
     item(int a) {
         data = a;
     }
-} Item;
+} Item; //声明元素变量
 typedef struct Node {
     Item item;
     struct Node* next;
     struct Node* prev;
-} Node;
+} Node;// 声明结点变量
 
 typedef struct List {
     Node* head;
     Node* tail;
-} List;
+} List;// 声明链表变量，其存储链表结构头结点和尾结点的地址
 
 Node* createNode(Item newItem) {
     Node* node = (Node*)malloc(sizeof(Node));
     node->item = newItem;
     node->prev = NULL;
     node->next = NULL;
-    return node;
+    return node; //创造一个新的节点，封装成了函数
 }
 
-void initList(List** list) {
+void initList(List** list) {// 初始化链表
     (* list) = (List*)malloc(sizeof(List));
     (* list)->head = NULL;
     (* list)->tail = NULL;
@@ -53,12 +53,12 @@ void addAtHead(List* list, Item newItem) {
         rewind(stdin);
         return;
     }
-    else if (list->head == NULL) {
+    else if (list->head == NULL) { // 如果链表为空
         list->head = newNode;
         list->tail = newNode;
     }
     else {
-        newNode->next = list->head;
+        newNode->next = list->head;// 更新头结点的地址
         list->head->prev = newNode;
         list->head = newNode;
     }
@@ -88,7 +88,7 @@ void addAtTail(List* list, Item newItem) {
     return;
 }
 
-void deleteAtHead(List* list) {
+void deleteAtHead(List* list) {//删除头结点
     if (list == NULL) {
         fprintf(stderr, "NullPointerException! Enter something except integer to quit!\n");
         fflush(stdin);
@@ -100,7 +100,7 @@ void deleteAtHead(List* list) {
         return;
     }
     Node* oldHead = list->head;
-    list->head = oldHead->next;
+    list->head = oldHead->next;//更新头结点
     if (list->head != NULL) { // 新的头节点不为空，更新前驱节点指针
         list->head->prev = NULL;
     }
@@ -135,7 +135,7 @@ Node* findMiddle(List* list) {
     return slow;
 }
 
-bool hasCycle(List* list) {
+bool hasCycle(List* list) {//判断是否有环
 
     // 如果链表为空，报错并返回false
     if (list == NULL) {
@@ -145,7 +145,7 @@ bool hasCycle(List* list) {
     else if (list->head == NULL) {
         fprintf(stderr, "EmptyListException! Try again!\n");
         return false;
-
+    }
         // 定义快慢指针并初始化为头节点
         Node* fast = list->head;
         Node* slow = list->head;
@@ -160,11 +160,10 @@ bool hasCycle(List* list) {
             }
         }
         return false;
-    }
 }
 
 
-void deleteAtTail(List* list) {
+void deleteAtTail(List* list) {//有严重bug先弃用
     if (list == NULL) {
         fprintf(stderr, "NullPointerException! Enter something except integer to quit!\n");
         fflush(stdin);
@@ -189,7 +188,7 @@ void deleteAtTail(List* list) {
     return;
 }
 
-bool insertAtIndex(List* list, int index, Item newItem) {
+bool insertAtIndex(List* list, int index, Item newItem) {//有严重bug先弃用
     int length = getListLength(list);
     if (list==NULL) {
         fprintf(stderr, "NullPointerException! Enter something except integer to quit!\n");
@@ -287,6 +286,10 @@ void printList(List* list) {//打印链表数据
 
 
 void deleteList(List** list) {//清空链表
+    if (list == NULL||(* list) == NULL) {
+        fprintf(stderr, "NullPointerException! Try again!\n");
+        return;
+    }
     Node* tempNode;
     Node* head = (* list)->head;
     while ((head) != NULL) {
@@ -294,7 +297,8 @@ void deleteList(List** list) {//清空链表
         free(head);
         head = tempNode;
     }
-    list = NULL;
+    *list = NULL;
+    puts("All datas have already been cleaned.");
     return;
 }
 

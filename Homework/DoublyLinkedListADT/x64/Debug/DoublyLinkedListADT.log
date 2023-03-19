@@ -1,5 +1,3 @@
 ﻿  DoublyLinkedListADT.cpp
-C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\DoublyLinkedListADT\DoublyLinkedListADTMenu.h(94,19): warning C4838: 从“int”转换到“SHORT”需要收缩转换
-C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\DoublyLinkedListADT\DoublyLinkedListADTMenu.h(94,22): warning C4838: 从“int”转换到“SHORT”需要收缩转换
-C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\DoublyLinkedListADT\DoublyLinkedListADT.h(164): warning C4715: “hasCycle”: 不是所有的控件路径都返回值
-  DoublyLinkedListADT.vcxproj -> C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\DoublyLinkedListADT\x64\Debug\DoublyLinkedListADT.exe
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\DoublyLinkedListADT\DoublyLinkedListADTMenu.h(86,19): warning C4838: 从“int”转换到“SHORT”需要收缩转换
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\DoublyLinkedListADT\DoublyLinkedListADTMenu.h(86,22): warning C4838: 从“int”转换到“SHORT”需要收缩转换

@@ -36,10 +36,8 @@ void Menu()
     printf("*                5) 输出打印双向链表的所有数据                                            *\n");    
     printf("*                6) 找到双向链表的中点并输出数据                                          *\n");
     printf("*                7) 判断链表是否成环                                                      *\n");
-    printf("*                8) 删除指定位置的节点                                                    *\n");
-    printf("*                9) 在指定位置插入节点                                                    *\n");
-    printf("*                A) 完全清空并删除双链表                                                  *\n");
-    printf("*                B) 退出程序                                                              *\n");
+    printf("*                8) 完全清空并删除双链表                                                  *\n");
+    printf("*                9) 退出程序                                                              *\n");
     printf("*******************************************************************************************\n");
     printf("请使用↑、↓和enter来实现选择和执行命令，或者输入每个命令前面的代号来执行命令<0 - 9><A - B>\n");
     printf("                     在菜单主页面且未操作菜单时键入'q'或'Q'退出程序\n");
@@ -75,16 +73,10 @@ void CursorPos1(int x)
         printf("*                7) 判断链表是否成环                                                      *\n");
         break;
     case 8:
-        printf("*                8) 删除指定位置的节点                                                    *\n");
+        printf("*                8) 完全清空并删除双链表                                                  *\n");
         break;
     case 9:
-        printf("*                9) 在指定位置插入节点                                                    *\n");
-        break;
-    case 10:
-        printf("*                A) 完全清空并删除双链表                                                  *\n");
-        break;
-    case 11:
-        printf("*                B) 退出程序                                                              *\n");
+        printf("*                9) 退出程序                                                              *\n");
         break;
     }
     return;
@@ -153,10 +145,10 @@ void Operation() {
         memset(Path, '\0', sizeof(char) * 199);
         system("cls");
         Menu();
-        Gotoxy(0, 18);
+        Gotoxy(0, 16);
         if ((c1 = _getch()) == -32) {//非VS环境运行需要将代码中的_getch改成getch
 
-            n = CursorOpr(line, 2, 2, 13, CursorPos1);//上下键操作
+            n = CursorOpr(line, 2, 2, 11, CursorPos1);//上下键操作
         }
         else if (c1 == '\0')continue;
         else if (c1 >= '0' && c1 <= '9') {//输入数字编号操作
@@ -166,28 +158,12 @@ void Operation() {
             n = tmp - '0';
         }
         else if (c1 == 'q' || c1 == 'Q') {//处理键入数据
-            Gotoxy(0, 19);//让光标到合适的地方输出
+            Gotoxy(0, 17);//让光标到合适的地方输出
             putchar(c1);
             puts("");
             system("pause");
             printf("Here is end of run.\n");
-        }
-        else if (c1 == 'a' || c1 == 'A') {//清空链表
-            Gotoxy(0, 19);
-            putchar(c1);
-            puts("");
-            deleteList(&orginList);
-            puts("All datas have already been cleaned.");
-            system("pause");
-            continue;
-        }
-        else if (c1 == 'b' || c1 == 'B') {//退出
-            Gotoxy(0, 19);
-            putchar(c1);
-            puts("");
-            puts("师兄再见，下次再来");
-            system("pause");
-            exit(0);
+        
         }
         else {//处理键入数据
             puts("输入错误");
@@ -196,14 +172,14 @@ void Operation() {
         }
         switch (n) {
         case 0: {
-            Gotoxy(0, 19);//
+            Gotoxy(0, 17);//
             if (orginList == NULL) initList(&orginList);
             else puts("You have already created a doublylinkedlist");
             system("pause");
             break;    
         }
         case 1: {
-            Gotoxy(0, 19);
+            Gotoxy(0, 17);
             Item enterData = 0;//新增节点
             puts("Please enter intger,otherwise function will quit:");
             while (scanf("%9d", &enterData.data))
@@ -216,7 +192,7 @@ void Operation() {
             break;
         }
         case 2: {//
-            Gotoxy(0, 19);
+            Gotoxy(0, 17);
             Item enterData = 0;//新增节点
             puts("Please enter intger,otherwise function will quit:");
             while (scanf("%9d", &enterData.data))
@@ -233,7 +209,7 @@ void Operation() {
            // break;
         }
         case 3: {
-            Gotoxy(0, 19);
+            Gotoxy(0, 17);
             deleteAtTail(orginList);
            // int index = 0;
             //puts("Please enter the index:");//删除节点
@@ -243,13 +219,13 @@ void Operation() {
             break;
         }
         case 4: {
-            Gotoxy(0, 19);
+            Gotoxy(0, 17);
             deleteAtHead(orginList);
             system("pause");
             break;
         }
         case 5: {
-            Gotoxy(0, 19);
+            Gotoxy(0, 17);
             printList(orginList);//打印链表
             system("pause");
             fflush(stdin);
@@ -257,7 +233,7 @@ void Operation() {
             break;
         }
         case 6: {
-            Gotoxy(0, 19);
+            Gotoxy(0, 17);
             Node* tempNode;
             if ((tempNode = findMiddle(orginList)) != NULL) {//查找中点
                 puts("Successfully Finding");
@@ -268,8 +244,8 @@ void Operation() {
             break;
         }
         case 7: {
-            Gotoxy(0, 19);
-            if (!hasCycle(orginList)) {
+            Gotoxy(0, 17);
+            if (!hasCycle(orginList)) {//判断是否有环
                 puts("Did'n find cycle");
             }
             else puts("Successfully finding a cycle");
@@ -277,32 +253,14 @@ void Operation() {
             break;
         }
         case 8: {
-            Gotoxy(0, 19);
-            int index = 0;
-            puts("Please enter the index:");//删除节点
-            if (scanf("%9d", &index) == 1 && deleteAtIndex(orginList, index)) puts("Successfully Deleting");
-            else puts("Failing to delete");
+            Gotoxy(0, 17);//清空链表
+            deleteList(&orginList);
+           
             system("pause");
             break;
         }
         case 9: {//
-            Gotoxy(0, 19);
-            int index = 0;
-            Item enterData2 = 0;
-            puts("Please enter in format:\n \"INDEX DATA\"");//插入节点
-            if (scanf("%9d %9d", &index, &enterData2.data) == 2) insertAtIndex(orginList, index, enterData2);
-            system("pause");
-            break;
-        }
-        case 10: {//清空链表数据
-            Gotoxy(0, 19);
-            deleteList(&orginList);
-            puts("All datas have already been cleaned.");
-            system("pause");
-            break;
-        }
-        case 11: {
-            Gotoxy(0, 19);//让光标到合适的地方输出
+            Gotoxy(0, 17);//让光标到合适的地方输出
             puts("师兄再见，下次再来");
             system("pause");
             exit(0);
