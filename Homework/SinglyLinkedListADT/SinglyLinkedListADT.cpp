@@ -11,7 +11,11 @@ int main() {
 		addNewNode(head, enterData);
 	}
 	printList(head);
-	deleteList(&head);
+	recursiveReverse(head);
+	puts("");
 	printList(head);
+		puts("");
+		pointerReverse(head);
+		printList(head);
 	return 0;
 }
