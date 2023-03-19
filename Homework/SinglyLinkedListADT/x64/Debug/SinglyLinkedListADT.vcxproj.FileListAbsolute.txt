@@ -1,1 +1,2 @@
 D:\Programs\Microsoft\VisualStudioFile\Project\SinglyLinkedListADT\x64\Debug\SinglyLinkedListADT.exe
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\SinglyLinkedListADT\x64\Debug\SinglyLinkedListADT.exe

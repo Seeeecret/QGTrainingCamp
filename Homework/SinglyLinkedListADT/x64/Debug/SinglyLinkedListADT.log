@@ -1,4 +1,4 @@
-﻿  源.cpp
-D:\Programs\Microsoft\VisualStudioFile\Project\SinglyLinkedListADT\SinglyLinkedListADT.h(76,33): warning C4018: “>”: 有符号/无符号不匹配
-D:\Programs\Microsoft\VisualStudioFile\Project\SinglyLinkedListADT\SinglyLinkedListADT.h(101,33): warning C4018: “>”: 有符号/无符号不匹配
-  SinglyLinkedListADT.vcxproj -> D:\Programs\Microsoft\VisualStudioFile\Project\SinglyLinkedListADT\x64\Debug\SinglyLinkedListADT.exe
+﻿  SinglyLinkedListADT.cpp
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\SinglyLinkedListADT\SinglyLinkedListADT.h(78,33): warning C4018: “>”: 有符号/无符号不匹配
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\SinglyLinkedListADT\SinglyLinkedListADT.h(103,33): warning C4018: “>”: 有符号/无符号不匹配
+  SinglyLinkedListADT.vcxproj -> C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\SinglyLinkedListADT\x64\Debug\SinglyLinkedListADT.exe
