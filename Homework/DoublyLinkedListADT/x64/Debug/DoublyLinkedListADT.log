@@ -1,0 +1,2 @@
+﻿  DoublyLinkedListADT.cpp
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\DoublyLinkedListADT\DoublyLinkedListADT.cpp(10): error C4700: 使用了未初始化的局部变量“list”
