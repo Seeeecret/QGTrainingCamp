@@ -11,7 +11,7 @@ struct node {
     Item item;
     struct node* next;//指向下一节点的指针
 };
-typedef struct node Node;
+typedef struct node Node;//声明节点
 typedef Node* List;//声明链表,链表变量名就是指向链表头节点的指针
 
 List createEmptyList() {
@@ -47,7 +47,12 @@ unsigned int getListLength(const List head) {//结点个数的计数函数
 }
 
 bool addNewNode(const List head, Item newItem) {
-    if(isNULL(head)) fprintf(stderr, "NullPointerException! Try again!\n");
+    if (isNULL(head)) {
+        fprintf(stderr, "NullPointerException! Try again!\n");
+        fflush(stdin);
+        rewind(stdin);
+        return false;
+    }
     else if (isFull()) {
         fprintf(stderr, "MemoryAllocationException! Try again!\n");
         return false;
@@ -66,7 +71,7 @@ bool addNewNode(const List head, Item newItem) {
     return true;
 }
 
-bool insertNewNode(List head, int index, Item newItem) {
+bool insertNewNode(List head, int index, Item newItem) {//在某位置插入节点，原节点后移
     if (isNULL(head)) {
         fprintf(stderr, "NullPointerException! Try again!\n");
         return false;
@@ -95,7 +100,7 @@ bool insertNewNode(List head, int index, Item newItem) {
     return true;
 }
 
-bool deteleNode(List head, int index) {
+bool deleteNode(List head, int index) {//删除节点
     if (isNULL(head)) {
         fprintf(stderr, "NullPointerException! Try again!\n");
         return false;
@@ -134,7 +139,7 @@ void deleteList(List* head) {//清空链表
     return;
 }
 
-bool equalItem(Item item1, Item item2) {
+bool equalItem(Item item1, Item item2) {//判断item1  item2是否相等
     return item1.data == item2.data;
 }
 /*
@@ -154,8 +159,8 @@ bool traverseTo(const List head, void(*pfunc)(Item item), Item target) {//遍历到
     return false;
 }*/
 
-Node* searchNode(const List head, Item target) {
-    if (isNULL(head)) {
+Node* searchNode(const List head, Item target) {//搜索链表中是否有节点item与target相等，若有,返回节点指针
+    if (isNULL(head)) {//这个功能没在系统中做出来，时间不够了
         fprintf(stderr, "NullPointerException! Try again!\n");
         return NULL;
     }
@@ -169,7 +174,7 @@ Node* searchNode(const List head, Item target) {
     return NULL;
 }
 
-void printList(const List head) {
+void printList(const List head) {//打印链表数据
     if (isNULL(head)) {
         fprintf(stderr, "NullPointerException! Try again!\n");
         return;
@@ -184,7 +189,7 @@ void printList(const List head) {
     return;
 }
 
-void swapEvenNodeOddNode(List head) {
+void swapEvenNodeOddNode(List head) {//奇偶交换
     if (isNULL(head)) {
         fprintf(stderr, "NullPointerException! Try again!\n");
         return;
@@ -201,8 +206,8 @@ void swapEvenNodeOddNode(List head) {
     cur = head->next;
     next = head->next->next;
     pre = head;
-    while (1) {
-        pre->next = next;
+    while (1) {//原理为每三个为一组处理,设默认为A、B、C节点,a、b、c、指针
+        pre->next = next;//用b,c指针交换BC节点，用a指针让A节点的next指向C节点，再让a指针移动到B节点,b,c指针也按顺序前移，不断循环
         cur->next = next->next;
         next->next = cur;
         pre = cur;
@@ -241,7 +246,7 @@ bool hasCycle(List head) {
         fprintf(stderr, "NullPointerException! Try again!\n");
         return false;
     }
-    else if(isNULL(head->next)) return false;
+    else if (isNULL(head->next)) return false;
 
     // 定义快慢指针并初始化为头节点
     Node* fast = head;
@@ -263,12 +268,8 @@ bool hasCycle(List head) {
 
 //  递归法反转链表
 List recursive(List head) {
-    // 如果链表为空，报错并返回head
-    if (isNULL(head)) {
-        fprintf(stderr, "NullPointerException! Try again!\n");
-        return head;
-    }// 如果只有一个节点，也返回head
-    else if (isNULL(head->next)) return head;
+    // 如果只有一个节点，也返回head
+    if (isNULL(head->next)) return head;
     // 递归地反转head->next后面的部分，并返回新的头节点newHead
     Node* newHead = recursive(head->next);
     // 将head->next节点指向head，形成环
@@ -281,18 +282,19 @@ List recursive(List head) {
 
 // 递归法的外层包装
 void recursiveReverse(List head) {
+    // 如果链表为空，报错并返回head
+    if (isNULL(head)) {
+        fprintf(stderr, "NullPointerException! Try again!\n");
+        return;
+    }
     List recursiveHead = head->next;
     head->next = recursive(recursiveHead);
 }
 
 // 指针法反转链表
-List pointer(List head) {
-     // 如果链表为空，报错并返回head
-    if (isNULL(head)) {
-        fprintf(stderr, "NullPointerException! Try again!\n");
-        return head;
-    }// 如果只有一个节点，也返回head
-    else if (isNULL(head->next)) return head;
+List pointer(List head) {   
+    // 如果只有一个节点，也返回head
+    if (isNULL(head->next)) return head;
     // 定义三个指针pre、cur和next，并初始化为NULL、head和NULL 
     Node* pre = NULL;
     Node* cur = head;
@@ -309,6 +311,11 @@ List pointer(List head) {
 
 // 指针法的外层包装
 void pointerReverse(List head) {
+    // 如果链表为空，报错并返回head
+    if (isNULL(head)) {
+        fprintf(stderr, "NullPointerException! Try again!\n");
+        return;
+    }
     List pointerHead = head->next;
-    head->next = recursive(pointerHead);
+    head->next = pointer(pointerHead);
 }

@@ -23,5 +23,8 @@
     <ClInclude Include="SinglyLinkedListADT.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SinglyLinkedListADTMenu.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
