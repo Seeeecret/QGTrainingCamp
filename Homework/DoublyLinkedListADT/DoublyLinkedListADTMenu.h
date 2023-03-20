@@ -181,7 +181,7 @@ void Operation() {
         case 1: {
             gotoXY(0, 17);
             Item enterData = 0;//新增节点
-            puts("Please enter intger,otherwise function will quit:");
+            puts("Please enter integer,otherwise function will quit:");
             while (scanf("%9d", &enterData.data))
             {
                 addAtTail(orginList, enterData);
@@ -194,7 +194,7 @@ void Operation() {
         case 2: {//
             gotoXY(0, 17);
             Item enterData = 0;//新增节点
-            puts("Please enter intger,otherwise function will quit:");
+            puts("Please enter integer,otherwise function will quit:");
             while (scanf("%9d", &enterData.data))
             {
                 addAtHead(orginList, enterData);

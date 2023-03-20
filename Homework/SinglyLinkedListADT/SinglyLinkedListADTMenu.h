@@ -204,7 +204,7 @@ void Operation() {
         case 1: {
             Gotoxy(0, 19);
             Item enterData;//新增节点
-            puts("Please enter intger,otherwise function will quit:");
+            puts("Please enter integer,otherwise function will quit:");
             while (scanf("%9d", &enterData.data))
             {
                 addNewNode(orginList, enterData);
