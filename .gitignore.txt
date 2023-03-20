@@ -1,2 +1,3 @@
-.vs/
+Homework/SinglyLinkedListADT/.vs/
+Homework/DoublyLinkedListADT/.vs/
 Typora
