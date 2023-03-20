@@ -54,7 +54,7 @@ bool addNewNode(const List head, Item newItem) {
         return false;
     }
     else if (isFull()) {
-        fprintf(stderr, "MemoryAllocationException! Enter something except integer to quit!\n");
+        fprintf(stderr, "MemoryAllocationException! Enter something except integer to quit!\n");// 检查内存是否足够
         return false;
     }
     else {
@@ -100,13 +100,13 @@ bool insertNewNode(List head, int index, Item newItem) {//在某位置插入节点，原节
     return true;
 }
 
-bool deleteNode(List head, int index) {//删除节点
+bool deleteNode(List head, int index) {// 删除节点
     if (isNULL(head)) {
         fprintf(stderr, "NullPointerException! Try again!\n");
         return false;
     }
     else if (index < 1 || index > getListLength(head)) {
-        fprintf(stderr, "IndexOutOfBoundException! Try again!\n");
+        fprintf(stderr, "IndexOutOfBoundException! Try again!\n"); // 输入的索引越界了，报错
         return false;
     }
     else if (index == 0) {
@@ -253,16 +253,12 @@ bool hasCycle(List head) {
 
 //  递归法反转链表
 List recursive(List head) {
-    // 如果只有一个节点，也返回head
-    if (isNULL(head->next)) return head;
-    // 递归地反转head->next后面的部分，并返回新的头节点newHead
-    Node* newHead = recursive(head->next);
-    // 将head->next节点指向head，形成环
-    head->next->next = head;
-    // 将head->next置空，断开环
-    head->next = NULL;
-    // 返回新的头节点newHead
-    return newHead;
+    // 如果只有一个节点，返回head
+    if (isNULL(head->next)) return head;// 递归地反转head->next后面的部分，并返回新的头节点newHead
+    Node* newHead = recursive(head->next); // 将head->next节点指向head，形成环 
+    head->next->next = head;  
+    head->next = NULL; // 将head->next置空，断开环  
+    return newHead; // 返回新的头节点newHead
 }
 
 // 递归法的外层包装
@@ -284,14 +280,12 @@ void recursiveReverse(List head) {
 List pointer(List head) {   
     // 如果只有一个节点，也返回head
     if (isNULL(head->next)) return head;
-    // 定义三个指针pre、cur和next，并初始化为NULL、head和NULL 
     Node* pre = NULL;
     Node* cur = head;
     Node* next = NULL;
-    // 遍历原来的链表，每次改变当前结点cur的指向为prev，并更新三个指针位置 
-    while (cur != NULL) {
+    while (cur != NULL) { // 遍历原来的链表，每次改变当前结点cur的指向为prev，并更新三个指针位置 
         next = cur->next;  // 记录当前结点cur的下一个结点为next  
-        cur->next = pre;  // 改变当前结点cur的指向为prev  
+        cur->next = pre;  // 改变当前结点cur的指向为pre
         pre = cur;  // 更新前一结点pre为curr  
         cur = next;  // 更新当前结点cur为next  
     }

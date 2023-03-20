@@ -18,8 +18,8 @@ char Path[200];
                                                FOREGROUND_GREEN |           \
                                                FOREGROUND_BLUE)//更改输出菜单内容背景颜色的宏定义: 默认
 void Menu();//菜单函数
-void CursorPos1(int x);//高亮显示部分的打印函数
-int CursorOpr(int line, int deta, int lower, int upper, void (*p)(int));//处理键入的上下键的函数
+void cursorUpdate1(int x);//高亮显示部分的打印函数
+int cursorOperate(int line, int deta, int lower, int upper, void (*p)(int));//处理键入的上下键的函数
 void Gotoxy(int x, int y);//移动光标的函数
 void Operation();
 
@@ -45,7 +45,7 @@ void Menu()
     printf("                     本系统单链表头结点空置，从第二个节点开始存储数据");
     return;
 }
-void CursorPos1(int x)
+void cursorUpdate1(int x)
 {
     switch (x)
     {
@@ -96,13 +96,13 @@ void Gotoxy(int x, int y)
     return;
 }
 
-int CursorOpr(int line, int deta, int lower, int upper, void (*p)(int))
+int cursorOperate(int line, int deta, int lower, int upper, void (*p)(int))
 {
     /*
     line：当前光标所在行数
     deta：行数与菜单选项的差值。比如在main菜单中选项(0)在第2行(行数从0开始计算)，所以deta等于2，即2 - 0
     upper, lower：选项的上下界
-    (*P)(int)：函数指针，选择哪个覆盖菜单
+    (*P)(int)：函数指针，选择哪个覆盖菜单。只实现了cursorUpdate1一种
     */
     char c1, c2;
     Gotoxy(0, line);
@@ -113,13 +113,13 @@ int CursorOpr(int line, int deta, int lower, int upper, void (*p)(int))
         {
             Gotoxy(0, line);
             IN_DEFAULT; //选择默认色
-            (*p)(line - deta); //覆盖，实现退选
+            (*p)(line - deta); //覆盖，实现退选(实际上就是打印)
             if (line == upper) //如果已经到了上界，则返回下界，实现滚动高亮
                 line = lower;
             else
                 ++line; //
             Gotoxy(0, line);
-            IN_CYAN;
+            IN_CYAN; // 选择青色
             (*p)(line - deta);
         }
         if (c2 == UPKEY)
@@ -155,7 +155,7 @@ void Operation() {
         Gotoxy(0, 18);
         if ((c1 = _getch()) == -32) {//非VS环境运行需要将代码中的_getch改成getch
 
-            n = CursorOpr(line, 2, 2, 13, CursorPos1);//上下键操作
+            n = cursorOperate(line, 2, 2, 13, cursorUpdate1);//上下键操作
         }
         else if (c1 == '\0')continue;
         else if (c1 >= '0' && c1 <= '9') {//输入数字编号操作
@@ -195,7 +195,7 @@ void Operation() {
         }
         switch (n) {
         case 0: {
-            Gotoxy(0, 19);//
+            Gotoxy(0, 19);// 初始化单向链表
             if (orginList == NULL) orginList = createEmptyList();
             else puts("You have already created a singlylinkedlist");
             system("pause");
@@ -259,7 +259,7 @@ void Operation() {
         }
         case 7: {
             Gotoxy(0, 19);
-            if (!hasCycle(orginList)) {
+            if (!hasCycle(orginList)) {// 找环
                 puts("Did'n find cycle");
             }
             else puts("Successfully finding a cycle");

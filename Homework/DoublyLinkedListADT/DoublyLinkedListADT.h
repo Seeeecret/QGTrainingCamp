@@ -62,7 +62,7 @@ void addAtHead(List* list, Item newItem) {
         list->head->prev = newNode;
         list->head = newNode;
     }
-    puts("New node added!");
+    puts("New node added! Enter something except integer to quit!");
     return;
 }
 
@@ -84,7 +84,7 @@ void addAtTail(List* list, Item newItem) {
         list->tail->next = newNode;
         list->tail = newNode;  // 更新尾结点的地址
     }
-    puts("New node added!");
+    puts("New node added! Enter something except integer to quit!");
     return;
 }
 
@@ -114,7 +114,7 @@ void deleteAtHead(List* list) {//删除头结点
 
 Node* findMiddle(List* list) {
     // 如果链表为空，报错
-    if (list == NULL || list->head == NULL) {
+    if (list == NULL) {
         fprintf(stderr, "NullPointerException! Try again!\n");
         return NULL;
     }
@@ -122,7 +122,7 @@ Node* findMiddle(List* list) {
         fprintf(stderr, "EmptyListException! Try again!\n");
         return NULL;
     }
-    else if (list->head->next == NULL) return NULL;
+    else if (list->head->next == NULL) return list->head;
     // 定义快慢指针并初始化为头节点
     Node* fast = list->head;
     Node* slow = list->head;
@@ -188,85 +188,6 @@ void deleteAtTail(List* list) {//有严重bug先弃用
     return;
 }
 
-bool insertAtIndex(List* list, int index, Item newItem) {//有严重bug先弃用
-    int length = getListLength(list);
-    if (list==NULL) {
-        fprintf(stderr, "NullPointerException! Enter something except integer to quit!\n");
-        return false;
-    }
-    else if (index < 0 || index > length) {
-        fprintf(stderr, "IndexOutOfBoundException! Enter something except integer to quit!\n");
-        return false;
-    }
-    else {
-        puts("New node inserted!");
-        if (index < length / 2) {
-            Node* cur = list->head;
-            for (int i = 0; i <= index; i++) {
-                cur = cur->next;
-            }
-            Node* newNode = (Node*)malloc(sizeof(Node));
-            newNode->item = newItem;
-            newNode->next = cur;
-            newNode->prev = cur->prev;
-            cur->prev->next = newNode;
-            cur->prev = newNode;
-        }
-        else {
-            Node* cur = list->tail;
-            for (int i = length; i > index; i--) {
-                cur = cur->prev;
-            }
-            Node* newNode = (Node*)malloc(sizeof(Node));
-            newNode->item = newItem;
-            newNode->next = cur;
-            newNode->prev = cur->prev;
-            cur->prev->next = newNode;
-            cur->prev = newNode;
-        }
-    }
-    return true;
-}
-
-bool deleteAtIndex(List* list, int index) {
-    int length = getListLength(list);
-    if (list == NULL) {
-        fprintf(stderr, "NullPointerException! Enter something except integer to quit!\n");
-        return false;
-    }
-    else if (index < 0 || index > length) {
-        fprintf(stderr, "IndexOutOfBoundException! Enter something except integer to quit!\n");
-        return false;
-    }
-    else if (index == 1) deleteAtHead(list);
-    else if (index == length) deleteAtTail(list);
-    else
-    {
-        puts("New node was deleted!");
-        if (index < length / 2) {
-            Node* cur = list->head;
-            for (int i = 1; i < index; i++) {
-                cur = cur->next;
-            }
-            cur->prev->next = cur->next;
-            cur->next->prev = cur->prev;
-            free(cur);
-            cur = NULL;
-        }
-        else {
-            Node* cur = list->tail;
-            for (int i = length; i > index; i--) {
-                cur = cur->prev;
-            }
-            Node* newNode = (Node*)malloc(sizeof(Node));
-            cur->prev->next = cur->next;
-            cur->next->prev = cur->prev;
-            free(cur);
-            cur = NULL;
-        }
-    }
-    return true;
-}
 
 void printList(List* list) {//打印链表数据
     if (list==NULL || list->head==NULL) {
