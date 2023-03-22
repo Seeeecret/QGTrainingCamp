@@ -47,7 +47,7 @@ public class JDBCUtil {
 
 
     /**
-     * 获得语句
+     * 获得普通语句
      *
      * @return {@link Statement}
      * @throws SQLException sqlexception异常
@@ -124,7 +124,7 @@ public class JDBCUtil {
     /**
      * 创建新表
      *
-     * @param createTableSQL 传入创建新表的语句
+     * @param createTableSQL 传入完整的创建新表的语句
      * @return boolean
      * @throws SQLException sqlexception异常
      */
@@ -155,7 +155,7 @@ public class JDBCUtil {
      * @param params 参数
      * @throws SQLException sqlexception异常
      */
-    public static void executeQueryCommon(String sql, Object... params) throws SQLException {
+    public static void executeCommonQuery(String sql, Object... params) throws SQLException {
         ResultSet rs;
         try (Connection connection = JDBCUtil.getConnection(); PreparedStatement pstmt = connection.prepareStatement(sql)) {
             for (int i = 0; i < params.length; i++) {
@@ -168,7 +168,15 @@ public class JDBCUtil {
         }
     }
 
-    public static void executeQuerySpecial(String queryContentName,String tableName, String otherLimits) throws SQLException {
+    /**
+     * 执行特别查询语句
+     *
+     * @param queryContentName 查询内容名
+     * @param tableName        表名
+     * @param otherLimits      其他限制条件，如 where ... 注意字符串要用\'转义单引号
+     * @throws SQLException sqlexception异常
+     */
+    public static void executeSpecialQuery(String queryContentName, String tableName, String otherLimits) throws SQLException {
         String sql = "select " +
                 queryContentName +
                 " from " +
@@ -194,13 +202,51 @@ public class JDBCUtil {
      * @return int
      * @throws SQLException sqlexception异常
      */
-    public static int executeInsertCommon(String sql, Boolean autoCommit, Object... params) throws SQLException{
-        return executeUpdateCommon(sql,autoCommit,params);
+    public static int executeCommonInsert(String sql, Boolean autoCommit, Object... params) throws SQLException{
+        return executeCommonUpdate(sql,autoCommit,params);
     }
 
+    /**
+     *
+     * 执行特殊插入，仅需要输入表名以及按MySQL语句格式插入的字段名和数据
+     *
+     * @param tableName     表名
+     * @param columnsName   列名
+     * @param valuesContent 插入的值,注意字符串要用\'转义单引号
+     * @return int
+     * @throws SQLException sqlexception异常
+     */
+    public static int executeSpecialInsert(String tableName, String columnsName , String valuesContent) throws SQLException {
+        PreparedStatement pstmt = null;
+        Connection connection = null;
+        if(columnsName == null){
+            columnsName = "";
+        }
+        StringBuffer sql = new StringBuffer("insert into ").
+                append(tableName).append(" ").
+                append(columnsName).append(" values ").
+                append(valuesContent);
+        String toStringSQL = sql.toString();
+        int rs;
+        try {
+            connection = JDBCUtil.getConnection();
+            pstmt = connection.prepareStatement(toStringSQL);
+            rs = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if(connection!=null){
+                connection.close();
+            }
+        }
+        return rs;
+    }
 
     /**
-     * 执行更新语句
+     * 执行一般更新语句
      *
      * @param sql    sql
      * @param autoCommit 是否自动提交
@@ -208,7 +254,7 @@ public class JDBCUtil {
      * @return int
      * @throws SQLException sqlexception异常
      */
-    public static int executeUpdateCommon(String sql, Boolean autoCommit, Object... params) throws SQLException {
+    public static int executeCommonUpdate(String sql, Boolean autoCommit, Object... params) throws SQLException {
 
         PreparedStatement pstmt = null;
 
@@ -237,7 +283,16 @@ public class JDBCUtil {
     return result;
 }
 
-    public static int executeUpdateSpecial(String tableName, String otherLimits, String... updateContent) throws SQLException {
+    /**
+     * 执行特殊更新语句
+     *
+     * @param tableName     表名
+     * @param otherLimits   其他限制，其他限制条件，如 where ... 注意字符串要用\'转义单引号
+     * @param updateContent 更新内容，一个一个按名字输入，不用逗号
+     * @return int
+     * @throws SQLException sqlexception异常
+     */
+    public static int executeSpecialUpdate(String tableName, String otherLimits, String... updateContent) throws SQLException {
         PreparedStatement pstmt = null;
         Connection connection = null;
 
@@ -269,6 +324,45 @@ public class JDBCUtil {
         }
         return rs;
     }
+
+
+    /**
+     * 执行特殊删除语句
+     *
+     * @param tableName   表名
+     * @param otherLimits 其他限制条件，如 where ... 注意字符串要用\'转义单引号
+     * @return int
+     * @throws SQLException sqlexception异常
+     */
+    public static int executeSpecialDelete(String tableName, String otherLimits) throws SQLException {
+        PreparedStatement pstmt = null;
+        Connection connection = null;
+
+        StringBuffer sql = new StringBuffer("delete from ").
+                append(tableName).append(" ").append(otherLimits);
+
+        String toStringSQL = sql.toString();
+
+        int rs;
+
+        try {
+            connection = JDBCUtil.getConnection();
+            pstmt = connection.prepareStatement(toStringSQL);
+            rs = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if(connection!=null){
+                connection.close();
+            }
+        }
+        return rs;
+    }
+
+
 
     /**
      * 展示结果集
@@ -303,7 +397,6 @@ public class JDBCUtil {
                 }
             }
         }
-//        rs.close();
     }
 
 
