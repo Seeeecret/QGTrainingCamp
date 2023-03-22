@@ -1,3 +1,4 @@
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Main {
@@ -5,13 +6,13 @@ public class Main {
 
 //        JDBCUtil.showTable("emp");
 //        JDBCUtil.beginTransaction();
-//        JDBCUtil.executeUpdate("Update emp set age = ? where ID = ?",
-//                false,18,3);
+//        JDBCUtil.executeUpdateCommon("Update emp set age = ? where ID = ?",
+//                false,28,1);
 //        JDBCUtil.showTable("emp");
-        JDBCUtil.executeQuery("select * from emp where id = ?",2);
-        JDBCUtil.showTable("dept");
+//        JDBCUtil.executeQueryCommon("select * from emp where id = ?",2);
+//        JDBCUtil.showTable("emp");
 //        JDBCUtil.endTransaction(false);
-
+        JDBCUtil.executeQuerySpecial("*","emp","where ID < 6 && salary<=8000 ");
 
     }
 }
