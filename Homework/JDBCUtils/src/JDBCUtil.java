@@ -46,28 +46,6 @@ public class JDBCUtil {
     }
 
 
-    /**
-     * 获得普通语句
-     *
-     * @return {@link Statement}
-     * @throws SQLException sqlexception异常
-     */
-    public static Statement getStatement() throws SQLException {
-        return dataSource.getConnection().createStatement();
-    }
-
-
-    /**
-     * 获取预编译语句
-     *
-     * @param sql sql
-     * @return {@link PreparedStatement}
-     * @throws SQLException sqlexception异常
-     */
-    public static PreparedStatement getPreparedStatement(String sql) throws SQLException {
-            return dataSource.getConnection().prepareStatement(sql);
-    }
-
 
     /**
      * 将连接交还数据源
@@ -125,16 +103,15 @@ public class JDBCUtil {
      * 创建新表
      *
      * @param createTableSQL 传入完整的创建新表的语句
-     * @return boolean
      * @throws SQLException sqlexception异常
      */
-    public static boolean createNewTable(String createTableSQL) throws SQLException {
+    public static void createNewTable(String createTableSQL) throws SQLException {
         Connection connection = dataSource.getConnection();
         Statement statement = null;
         boolean result;
         try {
             statement = connection.createStatement();
-            result = statement.execute(createTableSQL);
+            statement.execute(createTableSQL);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -145,7 +122,6 @@ public class JDBCUtil {
                 statement.close();
             }
         }
-        return result;
     }
 
     /**
@@ -153,9 +129,8 @@ public class JDBCUtil {
      *
      * @param sql    sql
      * @param params 参数
-     * @throws SQLException sqlexception异常
      */
-    public static void executeCommonQuery(String sql, Object... params) throws SQLException {
+    public static void executeCommonQuery(String sql, Object... params) {
         ResultSet rs;
         try (Connection connection = JDBCUtil.getConnection(); PreparedStatement pstmt = connection.prepareStatement(sql)) {
             for (int i = 0; i < params.length; i++) {
@@ -174,9 +149,8 @@ public class JDBCUtil {
      * @param queryContentName 查询内容名
      * @param tableName        表名
      * @param otherLimits      其他限制条件，如 where ... 注意字符串要用\'转义单引号
-     * @throws SQLException sqlexception异常
      */
-    public static void executeSpecialQuery(String queryContentName, String tableName, String otherLimits) throws SQLException {
+    public static void executeSpecialQuery(String queryContentName, String tableName, String otherLimits) {
         String sql = "select " +
                 queryContentName +
                 " from " +
@@ -197,13 +171,12 @@ public class JDBCUtil {
      * 执行插入语句
      *
      * @param sql        sql
-     * @param autoCommit 自动提交
      * @param params     参数个数
      * @return int
      * @throws SQLException sqlexception异常
      */
-    public static int executeCommonInsert(String sql, Boolean autoCommit, Object... params) throws SQLException{
-        return executeCommonUpdate(sql,autoCommit,params);
+    public static int executeCommonInsert(String sql, Object... params) throws SQLException{
+        return executeCommonUpdate(sql,params);
     }
 
     /**
@@ -249,18 +222,15 @@ public class JDBCUtil {
      * 执行一般更新语句
      *
      * @param sql    sql
-     * @param autoCommit 是否自动提交
      * @param params 参数
      * @return int
      * @throws SQLException sqlexception异常
      */
-    public static int executeCommonUpdate(String sql, Boolean autoCommit, Object... params) throws SQLException {
+    public static int executeCommonUpdate(String sql, Object... params) throws SQLException {
 
         PreparedStatement pstmt = null;
 
         Connection connection = dataSource.getConnection();
-
-        connection.setAutoCommit(autoCommit);
 
         int result;
 
@@ -271,10 +241,8 @@ public class JDBCUtil {
         }
         result = pstmt.executeUpdate();
     } catch (SQLException e) {
-        connection.rollback();
         throw new RuntimeException(e);
     } finally {
-        connection.commit();
         if (pstmt != null) {
             pstmt.close();
         }
@@ -300,14 +268,11 @@ public class JDBCUtil {
         for (String s : updateContent) {
             sql.append(s).append(",");
         }
-
         String toStringSQL = sql.deleteCharAt(sql.length() - 1).
                 append(" ").
                 append(otherLimits).
                 toString();
-
         int rs;
-
         try {
             connection = JDBCUtil.getConnection();
             pstmt = connection.prepareStatement(toStringSQL);

@@ -326,7 +326,7 @@ System.out.println(sql); // 输出 SELECT * FROM users WHERE name = 'Tom';
 
 ### 2.4	ResultSet
 
-​	`ResultSet`表示数据库结果集的数据表，通常通过执行查询数据库的语句生成。上文Statement接口中的executeQuery()方法的返回值就是ResultSet实现类的对象。
+​	`ResultSet`表示数据库结果集的数据表，通常通过执行查询数据库的语句生成。上文Statement接口中的executeQuery()方法的返回值就是ResultSet实现类的对象。**用完要close()**
 
 ​	相关继承链和实现:![ResultSet](https://mytyporapicute.oss-cn-guangzhou.aliyuncs.com/typoraPics/ResultSet.png)
 
@@ -630,6 +630,9 @@ ResultSet rs = ps.executeQuery(); //执行查询并获取结果集
     - 在获取PreparedStatement对象时，将sql语句发送给mysql服务器进行检查，编译（这些步骤很耗时）。
     - 执行时就不用再进行这些步骤了，速度更快。
     - 如果sql模板一样，则只需要进行一次检查、编译。
+    - 用完记得close()
+    - **不能在预编译语句**的sql语句的字符串处的表名部分使用?代替表名。因为预编译语句只能用?代替查询条件中的参数值，而不能用?代替**表名**、**列名**、**函数**名等SQL语法元素。如果你想要动态地指定表名，你需要用字符串拼接的方式来生成SQL语句。
+    - <u>关闭 Statement 将会**关闭**其产生的 ResultSet</u>。因此，如果尝试在关闭 Statement 后使用 ResultSet，则会尝试访问已经关闭的 ResultSet，这可能会导致 "java.sql.SQLException: ResultSet已关闭" 等异常。
 
 
 
@@ -722,16 +725,6 @@ public DruidPooledConnection getConnection();
 
     我们现在使用更多的是Druid，它的性能比其他两个会好一些。
 
-* Druid（德鲁伊）
-
-    * Druid连接池是阿里巴巴开源的数据库连接池项目 
-
-    * 功能强大，性能优秀，是Java语言最好的数据库连接池之一
-
-
-
-
-
 ### 3.2	Druid连接池介绍
 
 ​	Druid（德鲁伊）连接池是阿里巴巴开源的数据库连接池项目。功能强大，性能优秀，是Java语言最好的数据库连接池之一。
@@ -822,6 +815,16 @@ Properties prop = new Properties();
 
 
 
+
+## 4.0	自定义一个JDBCUtils类(基于Druid连接池)
+
+### 4.1	事务
+
+​	在初始化 Druid 连接池之后或从连接池中获取连接之后，我也可以设置 `defaultAutoCommit` 属性为 `false`来开启事务。如果在获取连接之后再将 `defaultAutoCommit` 属性设置为 `false`，那么之前已经获取的连接仍然会使用默认的自动提交模式，也就是会自动提交事务。只有在将属性设置为 `false` 之后，后续获取的连接才会遵循新的设置。但需要注意的是:
+
+1. 如果在获取连接后将 `defaultAutoCommit` 属性设置为 `false`，则需要在代码中显式地调用 `commit()` 或 `rollback()` 方法来提交或回滚事务，否则可能会导致未提交的事务一直挂起，浪费数据库资源。
+2. 如果应用程序在多个地方获取连接并且这些连接在使用时具有不同的事务隔离级别或自动提交模式，则可能会导致事务状态混乱，导致数据一致性问题。
+3. 在某些情况下，用户可能会因为忘记提交或回滚事务而导致数据不一致或锁定问题，因此您需要非常小心地使用手动事务控制。
 
 
 
