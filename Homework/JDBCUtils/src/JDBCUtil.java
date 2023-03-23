@@ -103,7 +103,6 @@ public class JDBCUtil {
      * 创建新表
      *
      * @param createTableSQL 传入完整的创建新表的语句
-     * @return boolean
      * @throws SQLException sqlexception异常
      */
     public static void createNewTable(String createTableSQL) throws SQLException {
