@@ -1,19 +1,9 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS 1
-#include "StackADT.h"
+#include "StackADTMenu.h"
 int main()
 {
-	Stack s = createStack();
-	Item pushItem = 0;
-	while (scanf("%lf", &pushItem.data) == 1) {
-		pushStack(&s, pushItem);
-	}
-	Item popItem = 0;
-	while (!isEmpty(&s)) {
-		popItem = popStack(&s);
-		printf("The pop item: %lf\n", popItem.data);
-	}
-
-	printf("The stack length: %d\n",countStack(&s));
+	Operation();
+	return 0;
 
 }
 
