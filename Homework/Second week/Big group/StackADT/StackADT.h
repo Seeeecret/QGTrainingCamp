@@ -1,27 +1,39 @@
-#define _CRT_SECURE_NO_WARNINGS 1
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-typedef struct item {
+struct item {
     double data;
     item(double newData) {
         data = newData;
     }
-} Item;
+};
 
-typedef struct Node // 栈结点
+
+typedef struct item Item;
+
+
+struct node // 栈结点
 {
     Item item; // 数据域
-    struct Node* next; // 指针域
-} Node;
+    struct node* next; // 指针域
+};
 
-typedef struct Node* Stack; // 栈类型
+typedef struct node Node;
+
+typedef struct node* Stack; // 栈类型
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <windows.h>
+#include <time.h>
+
+
+
 
 Stack createStack() {// 创建一个空栈
     Stack s = (Stack)malloc(sizeof(Node)); // 分配内存空间
     if (s==NULL) // 内存分配失败
     {
         printf("MemoryAllocationException!Please try again!\n");
+        free(s);
         return NULL;
     }
     s->next = NULL; // 栈顶指针指向NULL
@@ -30,11 +42,15 @@ Stack createStack() {// 创建一个空栈
 
 }
 
-bool isEmpty(Stack* s) {
+int isEmpty(Stack* s) { // 判断栈是否为空
+    if ((*s) == NULL) {
+        printf("NullPointerException! Please try again!\n");
+        return -1;
+    }
     return isnan((*s)->item.data);
 }// 判断栈是否为空
 
-int countStack(Stack* s) {
+int countStack(Stack* s) { // 计算栈中元素个数
     if ((*s) == NULL) {
         printf("NullPointerException! Please try again!\n");
         return -1;
@@ -54,7 +70,11 @@ int countStack(Stack* s) {
     }
 }
 
-void deleteStack(Stack* s) { // 删除一个栈
+void deleteStack(Stack* s) { // 删除栈
+    if ((*s) == NULL) {
+        printf("NullPointerException! Please try again!\n");
+        return;
+    }
     Node* temp = NULL;
     while ((*s)->next != NULL) // 遍历链表，释放每个结点的空间
     {
@@ -64,15 +84,17 @@ void deleteStack(Stack* s) { // 删除一个栈
     }
     free(*s); // 释放头结点的空间
     *s = NULL;
+    printf("Done!\n");
 }
 
 void pushStack(Stack* s, Item newItem) { // 入栈
-    if(s==NULL){
-        printf("NullPointerException! Please try again!\n");
+    if((*s)==NULL){
+        printf("NullPointerException! Please enter Q to quit and create a stack!\n");
         return;
     }
     else if (isEmpty(s)) {
         (*s)->item = newItem;
+        puts("New data pushed in!");
         return;
     }
     else {
@@ -85,6 +107,7 @@ void pushStack(Stack* s, Item newItem) { // 入栈
         p->item = newItem; // 指定数据域数值
         p->next = (*s); // 将新结点插入到头结点上面
         (*s) = p; // 更新头节点
+        puts("New data pushed in!");
     }
 }
 
@@ -111,3 +134,4 @@ Item popStack(Stack* s) { // 出栈
         return popItem2;
     }
 }
+
