@@ -153,9 +153,9 @@ void Operation() {
             Gotoxy(0, 16);//让光标到合适的地方输出
             putchar(c1);
             puts("");
+            printf("师兄再见\n");
             system("pause");
-            printf("Here is end of run.\n");
-        
+            exit(0);
         }
         else {//处理键入数据
             puts("输入错误");

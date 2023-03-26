@@ -1,0 +1,4 @@
+﻿  QueueADT.cpp
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Second week\Big group\QueueADT\QueueADT.h(74,10): warning C4553: “==”: 未使用表达式结果；是否打算使用“=”?
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Second week\Big group\QueueADT\QueueADTMenu.h(90,19): warning C4838: 从“int”转换到“SHORT”需要收缩转换
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Second week\Big group\QueueADT\QueueADTMenu.h(90,22): warning C4838: 从“int”转换到“SHORT”需要收缩转换

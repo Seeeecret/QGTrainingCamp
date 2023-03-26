@@ -1,4 +1,1 @@
-﻿  StackADT.cpp
-C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Second week\Big group\StackADT\StackADTMenu.h(79,19): warning C4838: 从“int”转换到“SHORT”需要收缩转换
-C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Second week\Big group\StackADT\StackADTMenu.h(79,22): warning C4838: 从“int”转换到“SHORT”需要收缩转换
-  StackADT.vcxproj -> C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Second week\Big group\StackADT\x64\Debug\StackADT.exe
+﻿  StackADT.vcxproj -> C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Second week\Big group\StackADT\x64\Debug\StackADT.exe
