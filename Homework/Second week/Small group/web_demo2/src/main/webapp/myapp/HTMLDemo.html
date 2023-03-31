@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTMLDemo</title>
+</head>
+<body>
+
+<h2><p align="center"><font face="楷体" size="5" color= "#b22222">登陆注册系统</font></p></h2>
+<form action="/ServletDemo" center name="upload" >
+    <p align="center">
+
+    <label for="1"><font face="楷体" size="4" color="#9932cc">账号:</font></label>
+      <input type="text" name="username" id="1">
+    </p>
+    <p align="center">
+
+    <label for="2">  <font face="楷体" size="4" color="#9932cc">密码:</font></label>
+      <input type="password" name="password" id="2">
+    </p>
+
+    <p align="center">
+        <button type="submit" name= "get" formmethod="get">使用Get注册</button>
+        <button type="submit" name= "post" formmethod="post">使用Post登陆</button>
+    </p>
+</form>
+<br>
+<h2><p align="center"><font face="楷体" size="3" color="#6495ed">以下按钮均需要打开控制台查看相应数据</font></p></h2>
+<form onsubmit="submitFormOptions(event)">
+    <p align="center">
+    <input type="hidden" name="field1" value="value1">
+    <button type="submit">使用Options请求方法</button>
+    </p>
+</form>
+<form onsubmit="submitFormHead(event)">
+    <p align="center">
+        <input type="hidden" name="field2" value="value2">
+        <button type="submit">使用Head请求方法</button>
+    </p>
+</form>
+<br>
+<h2><p align="center"><font face="楷体" size="5" color= "#b22222">修改密码系统</font></p></h2>
+<form action="/ServletDemo" id="upload2" onsubmit="submitFormPut(event)">
+    <p align="center">
+        <label for="3"><font face="楷体" size="4" color="#9932cc">账号:</font></label>
+        <input type="text" name="username" id="3">
+    </p>
+    <p align="center">
+        <label for="4">  <font face="楷体" size="4" color="#9932cc">密码:</font></label>
+        <input type="password" name="password" id="4">
+    </p>
+    <p align="center">
+    <button type="submit">使用Put修改密码</button>
+    </p>
+</form>
+<br>
+<h2><p align="center"><font face="楷体" size="5" color= "#b22222">删除账号系统</font></p></h2>
+<form action="/ServletDemo" id="upload3" onsubmit="submitFormDelete(event)">
+    <p align="center">
+        <label for="5"><font face="楷体" size="4" color="#9932cc">账号:</font></label>
+        <input type="text" name="username" id="5">
+    </p>
+    <p align="center">
+        <button type="submit">使用Delete删除用户账号</button>
+    </p>
+</form>
+
+
+</body>
+
+<script>
+
+    function submitFormPut(event) {
+        event.preventDefault();
+        let xhr = new XMLHttpRequest();
+        xhr.open('PUT', 'http://localhost:8080/ServletDemo');
+        xhr.setRequestHeader('put', 'application/json');
+
+        let formData = new FormData(document.getElementById("upload2"));
+        let data = {};
+        formData.forEach(function(value, key) {
+            data[key] = value;
+        });
+        let json = JSON.stringify(data);
+        xhr.send(json);
+        // var xhr = new XMLHttpRequest();
+        // xhr.open('PUT', 'http://localhost:8080/ServletDemo');
+        // xhr.setRequestHeader('put', 'application/x-www-form-urlencoded');
+        // xhr.onload = function() {
+        //     // handle response
+        // };
+        // xhr.send(new FormData(event.target));
+    }
+
+
+    function submitFormDelete(event) {
+        event.preventDefault();
+        let xhr = new XMLHttpRequest();
+        xhr.open('DELETE', 'http://localhost:8080/ServletDemo');
+        xhr.setRequestHeader('DELETE', 'application/json');
+
+        let formData = new FormData(document.getElementById("upload3"));
+        let data = {};
+        formData.forEach(function(value, key) {
+            data[key] = value;
+        });
+        let json = JSON.stringify(data);
+        xhr.send(json);
+    }
+
+        function submitFormOptions(event) {
+        event.preventDefault();
+        var xhr = new XMLHttpRequest();
+        xhr.open('OPTIONS', 'http://localhost:8080/ServletDemo');
+        xhr.setRequestHeader('OPTIONS', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+         };
+        xhr.send(new FormData(event.target));
+    }
+    function submitFormHead(event) {
+        event.preventDefault();
+        var xhr = new XMLHttpRequest();
+        xhr.open('HEAD', 'http://localhost:8080/ServletDemo');
+        xhr.setRequestHeader('HEAD', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+        };
+        xhr.send(new FormData(event.target));
+    }
+
+</script>
+</html>
