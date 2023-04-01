@@ -1,0 +1,8 @@
+﻿  SortSystem.cpp
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(28,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(40,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(53,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(68,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(276): warning C4715: “quickSort”: 不是所有的控件路径都返回值
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(265): warning C4715: “quick”: 不是所有的控件路径都返回值
+  SortSystem.vcxproj -> C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\x64\Debug\SortSystem.exe
