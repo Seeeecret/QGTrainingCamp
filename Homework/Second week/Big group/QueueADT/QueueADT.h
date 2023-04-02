@@ -14,7 +14,7 @@ struct queueHead {
 typedef struct queueHead Queue;
 #include <stdio.h>
 #include <stdlib.h>
-extern int typeFlag;
+extern int flag;
 // 定义队列节点
 
 
@@ -151,7 +151,7 @@ void TraverseQueue(Queue* queue) {// 遍历队列并打印
         printf("EmptyQueueException! Please try again.\n");
         return;
     }
-    if (typeFlag == 0) {
+    if (flag == 0) {
         int* data1;
         while ((data1 = (int*)deQueueForTraverse(queue)) != NULL) {
             printf("Data is: %d\n", *data1);

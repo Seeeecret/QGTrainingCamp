@@ -1,11 +1,10 @@
 ﻿  SortSystem.cpp
-C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(30,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
-C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(42,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
-C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(55,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
-C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(70,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
-C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(82,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
-C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(426): warning C4715: “quick”: 不是所有的控件路径都返回值
-C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(416): warning C4715: “quickSortMoT”: 不是所有的控件路径都返回值
-C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(437): warning C4715: “quickSort”: 不是所有的控件路径都返回值
-C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(405): warning C4715: “quickMoT”: 不是所有的控件路径都返回值
-  SortSystem.vcxproj -> C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\x64\Debug\SortSystem.exe
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(22,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(34,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(47,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(62,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(74,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystemMenu.h(114,19): warning C4838: 从“int”转换到“SHORT”需要收缩转换
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystemMenu.h(114,22): warning C4838: 从“int”转换到“SHORT”需要收缩转换
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(436): warning C4715: “quickMoT”: 不是所有的控件路径都返回值
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Third week\Big group\SortSystem\SortSystem.h(459): warning C4715: “quick”: 不是所有的控件路径都返回值
