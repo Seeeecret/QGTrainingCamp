@@ -23,5 +23,8 @@
     <ClInclude Include="SortSystem.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SortSystemMenu.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
