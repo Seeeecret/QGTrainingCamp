@@ -5,22 +5,14 @@
 #include <time.h>
 #include <string.h>
 #include <queue>
-void printArray(int* arr, int length);
-void CountSort(int* arr, int length);
-void mergeSort(int* array, int left, int right);
-void merge(int* array, int left, int mid, int right);
-void writeArrayToFile(int* arr, int length);
-int* readArrayFromFile(int length);
-/*
-	本系统集成插入排序、归并排序、快速排序、计数排序、计数排序的排序算法并且能输出各种数据量大小及各种次数下的排序用时
-	也支持生成测试数据到.txt和从.txt中读取数据的功能
-*/
 
-void printArray(int* arr,int length) {
+void printArray(int* arr,int length) {// 打印数组
 	int i;
+	length = 50;
 	for (i = 0; i < length; i++) {
 		printf("%d  ", arr[i]);
 	}
+	puts("");
 }
 
 int* createBigArray() {// 创建一个长度为200000并填充有随机非负整数的数组
@@ -76,7 +68,7 @@ int* createTinyArray() {// 创建一个大小为100并填充有随机非负整数的数组
 	return arr;
 
 }
-int* createColorSortArray(int length) {
+int* createColorSortArray(int length) {// 创建符合颜色排序规则的数组
 	int* arr = (int*)malloc(sizeof(int) * length);
 	// 设置随机数种子
 	srand(time(NULL));
@@ -90,7 +82,9 @@ int* createColorSortArray(int length) {
 
 
 
-void colorSort(int* arr,int length) {
+int* colorSort(int* array,int length) {// 颜色排序
+	int* arr = (int*)malloc(sizeof(int) * (length));
+	memcpy(arr, array, sizeof(int) * length);
 		int p0 = 0; 
 		int p2 = length -1; 
 		int i = 0;
@@ -110,31 +104,40 @@ void colorSort(int* arr,int length) {
 				p2--;
 			}
 		}
-
+		return arr;
 }
 
-int* readArrayFromFile(int length) {
+int* readArrayFromFile(int length) {// 从input.txt中读入数组
 	int* arr = (int*)malloc(sizeof(int) * length);
-	FILE* fp = fopen("sort.txt", "r");
+	int i;
+	memset(arr, 0, sizeof(int) * length);
+	FILE* fp = fopen("input.txt", "r");
 	if (fp == NULL) {
-		printf("File can't be opend");
+		printf("File can't be opend\n");
 		return NULL;
 	}
-	for (int i = 0; i < length; i++) {
-		fscanf(fp, "%d", &arr[i]);
+	for (i = 0; i < length; i++) {
+		if (fscanf(fp, "%d", &arr[i]) == EOF)
+			break;
 	}
 	fclose(fp);
+	if (i < length) {
+		printf("The array in txt is shorter than current array format.\nPlease select Option 0 or change the arraylength in txt to %d\n", length);
+	}
+	else
+	printf("Successfully write in from input.txt!\n");
 	return arr;
 }
-void writeArrayToFile(int* arr, int length) {
-	FILE* fp = fopen("sort.txt", "w");
+void writeArrayToFile(int* arr, int length) {// 将数组写入到output.txt中
+	FILE* fp = fopen("output.txt", "w");
 	if (fp == NULL) {
-		printf("File can't be opend");
+		printf("File can't be opend\n");
 		return;
 	}
 	for (int i = 0; i < length; i++) {
 		fprintf(fp, "%d ", arr[i]);
 	}
+	printf("Successfully output output.txt !\n");
 	fclose(fp);
 }
 
@@ -142,7 +145,9 @@ void writeArrayToFile(int* arr, int length) {
 
 
 
-void radixCountSort(int* arr, int length) {
+int* radixCountSort(int* array, int length) {// 干掉我一个下午的基数计数排序
+	int* arr = (int*)malloc(sizeof(int)*(length));
+	memcpy(arr, array, sizeof(int) * length);
 	int divisor = 1;
 	int max = arr[0];
 	int* tempArray = (int*)malloc(sizeof(int)*(length));
@@ -172,10 +177,13 @@ void radixCountSort(int* arr, int length) {
 		divisor *= 10;
 	}
 	free(tempArray);
+	return arr;
 }
 
 
-void countSort(int* arr,int length) {
+int* countSort(int* array,int length) {// 计数排序
+	int* arr = (int*)malloc(sizeof(int) * (length));
+	memcpy(arr, array, sizeof(int) * length);
 	int max = arr[0], min = arr[0];
 	for (int i = 0; i < length; i++) {
 		max = max > arr[i] ? max : arr[i];
@@ -183,7 +191,6 @@ void countSort(int* arr,int length) {
 	}
 	int tempArrayLength = max - min + 1;
 	int* tempArray = (int*)malloc(sizeof(int) * tempArrayLength);
-	if (tempArray == NULL)return;
 	memset(tempArray, 0, sizeof(int) * tempArrayLength);
 
 	for (int i = 0; i < length; i++) {
@@ -197,26 +204,31 @@ void countSort(int* arr,int length) {
 		}
 
 	}
+	return arr;
 }
 
 
-void insetSort(int* array, int length) {// 插入排序
-	for (int i = 1; i < length; i++) {// 未排序区的第一个指针
-		int  k=i;// 记录i的指针
-		int temp = array[i];
-		while (temp < array[i-1]&& i>0) {
+int* insertSort(int* array, int length) {// 插入排序
+	int* arr = (int*)malloc(sizeof(int) * (length));
+	memcpy(arr, array, sizeof(int) * length);
+	for (int i = 1; i < length; i++) {
+		int  k=i;
+		int temp = arr[i];
+		while (temp < arr[i-1]&& i>0) {
 			
-			array[i] = array[i-1];
+			arr[i] = arr[i-1];
 			i--;
 		}
-		array[i] = temp;
+		arr[i] = temp;
 		i = k;
 	}
-
+	return arr;
 }
 
 
-void bubbleSort(int arr[], int length) {
+int* bubbleSort(int* array, int length) {// 三重优化版冒泡排序
+	int* arr = (int*)malloc(sizeof(int) * (length));
+	memcpy(arr, array, sizeof(int) * length);
 	int low = 0; 
 	int high = length - 1;
 	int last = low;
@@ -246,30 +258,23 @@ void bubbleSort(int arr[], int length) {
 		}
 		low = last;
 	}
+	return arr;
 }
 clock_t startClock() {
 	return clock();
 }
 
-void endClock(clock_t startTime) {
-	clock_t diff = startTime - clock();
-	printf("The algorithm cost %d ms\n", diff);
+clock_t endClock() {
+	return clock();
+}
+void costTime(clock_t startTime,clock_t endTime) {// 计算算法消耗时间
+	clock_t diff = endTime - startTime;
+	printf("The algorithm cost %ld ms\n", diff);
 	return;
 }
 
 
-void mergeSort(int* array, int left, int right)
-{
-	if (left >= right)
-	{
-		return;
-	}
-	int mid = (left + right) / 2;
-	mergeSort(array, left, mid);
-	mergeSort(array, mid + 1, right);
-	merge(array, left, mid, right);
-}
-void merge(int* array, int left, int mid, int right)
+void merge(int* arr, int left, int mid, int right)// 归并排序的排序单元
 {
 	int s1 = left;
 	int s2 = mid + 1;
@@ -277,30 +282,51 @@ void merge(int* array, int left, int mid, int right)
 	int i = 0;
 	while (s1 <= mid && s2 <= right)
 	{
-		if (array[s1] <= array[s2])// 修改升序逆序仅需修改这里
+		if (arr[s1] <= arr[s2])// 修改升序逆序仅需修改这里
 		{
-			temp[i++] = array[s1++];
+			temp[i++] = arr[s1++];
 		}
 		else
 		{
-			temp[i++] = array[s2++];
+			temp[i++] = arr[s2++];
 		}
 	}
 	while (s1 <= mid)
 	{
-		temp[i++] = array[s1++];
+		temp[i++] = arr[s1++];
 	}
 	while (s2 <= right)
 	{
-		temp[i++] = array[s2++];
+		temp[i++] = arr[s2++];
 	}
 	for (int j = 0; j < (right - left + 1); j++)
 	{
-		array[j + left] = temp[j];
+		arr[j + left] = temp[j];
 	}
 	free(temp);
 }
-int partition(int* arr, int low, int high) {
+
+void mergeInto(int* array, int left, int right)// 归并排序的递归单元
+{
+
+	if (left >= right)
+	{
+		return;
+	}
+
+	int mid = (left + right) / 2;
+	mergeInto(array, left, mid);
+	mergeInto(array, mid + 1, right);
+	merge(array, left, mid, right);
+
+}
+int* mergeSort(int* array, int length) {// 归并排序的最外层封装
+	int* arr = (int*)malloc(sizeof(int) * (length));
+	memcpy(arr, array, sizeof(int) * (length));
+	mergeInto(arr, 0, length - 1);
+	return arr;
+}
+int partition(int* arr, int low, int high) {// 快排的排序单元
 	int pivot;
 	int a = 0;
 	pivot = rand() % (high - low + 1) + low;
@@ -332,7 +358,7 @@ int partition(int* arr, int low, int high) {
 	return i;
 }
 
-int partitionMoT(int* arr, int low, int high) {
+int partitionMoT(int* arr, int low, int high) {// 快排的排序单元
 	int mid = low + (high - low) / 2;
 	if (arr[low] > arr[high]) {// low最小,high最大，保证high比low大
 		int temp = arr[low];
@@ -376,7 +402,12 @@ int partitionMoT(int* arr, int low, int high) {
 	return i;
 }
 
-int findKthLargest(int* arr, int length, int k) {
+int findKthSmallest(int* array,int k,int length) {// 找到第K小的元素
+	if (k<1 || k>length) {
+		return -1;
+	}
+	int* arr = (int*)malloc(sizeof(int) * (length));
+	memcpy(arr, array, sizeof(int) * length);
 	int low = 0, high = length - 1;
 	while (low <= high) {
 		int pos = partition(arr, low, high);
@@ -393,8 +424,8 @@ int findKthLargest(int* arr, int length, int k) {
 	return -1; // 若找不到第K大的数，返回-1
 }
 
-int* quickMoT(int arr[], int low, int high)
-{
+int* quickMoT(int* arr, int low, int high){
+
 	if (low >= high)
 	{
 		return arr;
@@ -403,18 +434,20 @@ int* quickMoT(int arr[], int low, int high)
 	quickMoT(arr, low, i - 1);
 	quickMoT(arr, i + 1, high);
 }
-int* quickSortMoT(int arr[], int N)// 递归版
-{
+int* quickSortMoT(int* array, int length){// MoT优化递归版快排
+	int* arr = (int*)malloc(sizeof(int) * (length));
+	memcpy(arr, array, sizeof(int) * length);
 	if (arr == NULL)
 	{
 		return arr;
 	}
 	else
 	{
-		quickMoT(arr, 0, N - 1);
+		quickMoT(arr, 0, length - 1);
 	}
+	return arr;
 }
-int* quick(int arr[], int low, int high)
+int* quick(int* arr, int low, int high)
 {
 	if (low >= high)
 	{
@@ -424,19 +457,24 @@ int* quick(int arr[], int low, int high)
 	quick(arr, low, i - 1);
 	quick(arr, i + 1, high);
 }
-int* quickSort(int arr[], int N)// 递归版
+int* quickSort(int* array, int length)// 递归版快排
 {
+	int* arr = (int*)malloc(sizeof(int) * (length));
+	memcpy(arr, array, sizeof(int) * length);
 	if (arr == NULL)
 	{
 		return arr;
 	}
 	else
 	{
-		quick(arr, 0, N - 1);
+		quick(arr, 0, length - 1);
 	}
+	return arr;
 }
 
-void quickSort2(int arr[], int length) {// 非递归版
+int* quickSort2(int* array, int length) {// 非递归版快排
+	int* arr = (int*)malloc(sizeof(int) * (length));
+	memcpy(arr, array, sizeof(int) * length);
 	int low = 0, high = length - 1;
 	int* stack = (int*)malloc(sizeof(int) * (high - low + 1));
 	int top = -1;
@@ -454,5 +492,32 @@ void quickSort2(int arr[], int length) {// 非递归版
 			stack[++top] = pivotIndex + 1;
 			stack[++top] = high;
 		}
+	}
+	return arr;
+}
+void sortCell(int* arr,int*(*func)(int*,int),int flag) {// 供Operation()调用的封装好附属功能的排序单元
+	int* temparr=NULL;
+	if (flag == 100) {
+		puts("The origin array:");
+		printArray(arr, flag);
+		clock_t start = startClock();
+		for (int i = 0; i < flag; i++) {
+			temparr = func(arr, flag);
+		}
+		clock_t end = endClock();
+		puts("The sorted array:");
+		printArray(temparr, flag);
+		costTime(start, end);
+	}
+	else
+	{
+		puts("The origin array:");
+		printArray(arr, flag);
+		clock_t start = startClock();
+		temparr = func(arr, flag);
+		clock_t end = endClock();
+		puts("The sorted array:");
+		printArray(temparr, flag);
+		costTime(start, end);
 	}
 }
