@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>meritMenu</title>
+    <script src="webjars/jquery/3.6.4/jquery.js"></script>
+    <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+<p id="output"></p>
+<div id="meritValue"></div>
+<br>
+<p align="center">
+    <button type="button" id="MeritBtn" name="meritBtn">我是木鱼</button>
+</p>
+<br>
+<p align="center">
+    <button type="button" id="QuitBtn" name="QuitBtn">退出登陆</button>
+</p>
+</body>
+<script>//动态展示数据
+const urlParams = new URLSearchParams(window.location.search);
+const username1 = urlParams.get('username');
+$(document).ready(function () {
+    // 发送 Ajax 请求获取数据
+    // $("#showMeritBtn").click(function () {
+    $.ajax({
+        url: 'http://localhost:8080/AjaxJSONDemo_war/queryMerit',
+        type: 'get',
+        data: {
+            username: username1,
+        },
+        dataType: 'json',
+        success: function (response) {
+            // 渲染数据到网页上
+            let merit = response.data;
+            $('#output').html("<h2><font face=\"楷体\">尊敬的用户 " + username1 + " ,您的当前功德为:</font></h2>");
+            $("#meritValue").html(merit);
+        },
+        error: function () {
+            alert("System error");
+        }
+    });
+    // });
+    $("#MeritBtn").click(function () {
+        $.ajax({
+            url: 'http://localhost:8080/AjaxJSONDemo_war/addMerit',
+            type: 'get',
+            data: {
+                username: username1,
+            },
+            dataType: 'json',
+            success: function (response) {
+                // 渲染数据到网页上
+                if (response.code === 200) {
+                    let merit = response.data;
+                    $("#meritValue").html(merit);
+                } else {
+                    alert(response.msg);
+                }
+            },
+            error: function () {
+                alert("System error");
+            }
+        });
+    });
+    $("#QuitBtn").click(function () {
+
+        window.location.href = "http://localhost:8080/AjaxJSONDemo_war/loginMenu.html";
+
+    });
+
+});
+</script>
+</html>
