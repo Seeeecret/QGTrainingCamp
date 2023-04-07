@@ -1,39 +1,32 @@
 package Servlet;
 
-import Service.User;
+import DAO.userDAO;
 import Service.userService;
 import Utils.mapper;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
-
-@WebServlet("/login")
-public class loginServlet extends HttpServlet {
+@WebServlet("/queryMerit")
+public class queryMeritServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         // 设置响应内容类型
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        User login = userService.login(username, password);
         HashMap<String, Object> jsonMap = new HashMap<>();
-        if (login != null) {
-            jsonMap.put("code", 200);
-            jsonMap.put("msg", "登陆成功");
-            jsonMap.put("data", login);
-        } else {
-            jsonMap.put("code", 400);
-            jsonMap.put("msg", "登陆失败");
-        }
+        String username = request.getParameter("username");
+        int i = 0;
+        i = userService.query(username).getMerit();
+        jsonMap.put("code", 200);
+        jsonMap.put("msg", "功德查询成功");
+        jsonMap.put("data", i);
         mapper.writeValue(response.getWriter(), jsonMap);
     }
 
@@ -41,8 +34,8 @@ public class loginServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         doGet(request, response);
     }
-
 }
+

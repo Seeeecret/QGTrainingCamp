@@ -1,5 +1,8 @@
 package Servlet;
-import DAO.meritDao;
+import DAO.userDAO;
+import Service.User;
+import Service.userService;
+import Utils.mapper;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,19 +24,22 @@ public class addMeritServlet extends HttpServlet{
         String username = request.getParameter("username");
         int i = 0;
         try {
-            i = meritDao.addMerit(username);
+            i = userDAO.addMerit(username);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
+            int merit = userService.query(username).getMerit();
             if (i == 0) {
+                jsonMap.put("data", i);
                 jsonMap.put("code", 400);
                 jsonMap.put("msg", "功德增加失败");
             } else {
                 jsonMap.put("code", 200);
+                jsonMap.put("data", merit);
                 jsonMap.put("msg", "功德增加成功");
             }
         }
-
+        mapper.writeValue(response.getWriter(), jsonMap);
 
     }
     @Override
