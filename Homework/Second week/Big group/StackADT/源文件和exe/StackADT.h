@@ -1,3 +1,5 @@
+#include "TreeADT.h"
+
 struct item {
     double data;
     item(double newData) {
