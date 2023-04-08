@@ -11,7 +11,8 @@
 <div id="meritValue"></div>
 <br>
 <p align="center">
-    <button type="button" id="MeritBtn" name="meritBtn">我是木鱼</button>
+    <img src="resources/Wooden_Fish.png" alt="我是木鱼" id="MeritBtn" name="meritBtn" height=200 width=200>
+<!--    <button type="button" id="MeritBtn" name="meritBtn">我是木鱼</button>-->
 </p>
 <br>
 <p align="center">
@@ -21,9 +22,10 @@
 <script>//动态展示数据
 const urlParams = new URLSearchParams(window.location.search);
 const username1 = urlParams.get('username');
-$(document).ready(function () {
+$(document).ready(function (e) {
     // 发送 Ajax 请求获取数据
     // $("#showMeritBtn").click(function () {
+
     $.ajax({
         url: 'http://localhost:8080/AjaxJSONDemo_war/queryMerit',
         type: 'get',

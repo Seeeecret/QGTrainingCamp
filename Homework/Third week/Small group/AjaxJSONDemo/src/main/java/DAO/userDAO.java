@@ -24,7 +24,6 @@ public class userDAO {
             }
             finally {
                 JDBCUtil.close(statement);
-                JDBCUtil.close(connection);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -34,12 +33,12 @@ public class userDAO {
 
 
     public static int insert(Connection connection, User user) {
+        int i = 0;
         try (PreparedStatement statement = connection.prepareStatement("INSERT INTO user_merit (username, password) VALUES (?, ?)")) {
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getPassword());
-            int i = statement.executeUpdate();
+            i = statement.executeUpdate();
             JDBCUtil.close(statement);
-            JDBCUtil.close(connection);
             return i;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -52,7 +51,6 @@ public class userDAO {
             statement.setString(2, user.getUsername());
             int i = statement.executeUpdate();
             JDBCUtil.close(statement);
-            JDBCUtil.close(connection);
             return i;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -64,7 +62,6 @@ public class userDAO {
             statement.setString(1, username);
             int i = statement.executeUpdate();
             JDBCUtil.close(statement);
-            JDBCUtil.close(connection);
             return i;
         } catch (SQLException e) {
             throw new RuntimeException(e);
