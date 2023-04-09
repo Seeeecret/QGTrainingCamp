@@ -1,16 +1,14 @@
-// 二叉排序树ADT
+// 二叉查找树ADT
 /*
 * 用类似链表的方式实现，每个节点存储三个指针:左子、右子、父节点
 * 需要分别完成查找、插入、删除、层序遍历、三序遍历的递归和非递归版本
 * 堆可以尝试了解并实现，AVL需要旋转难度较高，红黑树过于复杂。
 */
-//#ifndef _TREEADT_H_
-//#define _TREEADT_H_
+// 写在最后: 光一个二叉查找树的删除节点的函数就搞了我四个小时，寄了
 #include <iostream>
 #include <queue>
 #include "StackADT.h"
 #include <windows.h>
-#define MAXSIZE 100
 using namespace std;
 
 // 初始化
@@ -31,14 +29,15 @@ void levelOrder(TreeNode *root);
 void preOrderIterative(TreeNode *root);
 void inOrderIterative(TreeNode *root);
 void postOrderIterative(TreeNode *root);
+// 删除整棵树
+void deleteAll(TreeNode* root);
+void deleteTree(Tree* tree);
 
-//#endif
+// 一些辅助功能函数
 bool isNULL(Tree* tree);
 bool isEmpty(Tree* tree);
 bool isLeftChild(TreeNode* treeNode);
 bool isNULL(TreeNode* tree);
-void deleteAll(TreeNode* root);
-void deleteTree(Tree* tree);
 void traverseCell(Tree* tree, void(*pfunc)(TreeNode* root));
 void initTree(Tree **tree) {
 	if (isNULL(*tree)) {
