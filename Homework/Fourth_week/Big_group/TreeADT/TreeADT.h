@@ -84,6 +84,10 @@ bool insertNode(Tree* tree, int value) {
 	}
 	TreeNode* node = tree->root;
 	TreeNode* parent = NULL;
+	if (!isNULL(searchNode(tree, value))) {
+		fprintf(stderr, "ExsistingNodeException! You have already insert the same node into the tree!.\n");
+		return false;
+	}
 	while (node != NULL) {
 		parent = node;
 		if (node->value == value)	return false;
@@ -95,6 +99,7 @@ bool insertNode(Tree* tree, int value) {
 		}
 	}
 	TreeNode* newNode = (TreeNode*)malloc(sizeof(TreeNode));
+	memset(newNode, 0, sizeof(TreeNode));
 	newNode->value = value;
 	newNode->left = newNode->right = NULL;
 	newNode->parent = parent;
@@ -123,8 +128,8 @@ bool deleteNode(Tree* tree, int value) {
 	TreeNode *node = searchNode(tree, value);
 	if (isNULL(node))	return false;
 	TreeNode *parent = node->parent;
-	// 只有一个节点
-	if (tree->root->value == node->value) {
+	// 只有一个节点,且该节点位根节点
+	if (tree->root->value == node->value && isNULL(tree->root->right)&& isNULL(tree->root->left)) {
 		free(node);
 		tree->root = NULL;
 		return true;
@@ -171,12 +176,29 @@ bool deleteNode(Tree* tree, int value) {
 		while (temp->left != NULL) {
 			temp = temp->left;
 		}
+		if (temp->value == tree->root->right->value){ // 是根节点的右节点
+			temp->parent->right = temp->right;
+		}
+		else if (isLeftChild(temp) && !isNULL(temp->right)) {// 目标替换节点是左子节点且有右子节点
+			temp->parent->left = temp->right;
+		}
+		else if (!isLeftChild(temp) && !isNULL(temp->right)) {// 目标替换节点是右子节点且有右子节点
+			temp->parent->right = temp->right;
+		}
+		else {// 目标节点无子节点
+			if (isLeftChild(temp)) {
+				temp->parent->left = NULL;
+			}
+			else {
+				temp->parent -> right = NULL;
+			}
+		}
 		node->value = temp->value;
-		deleteNode(tree, temp->value);
+		free(temp);
 	}
 	return true;
 }
-
+// 删除整棵树
 void deleteAll(TreeNode* root) {
 	if (!isNULL(root)) {
 		deleteAll(root->left);
@@ -184,20 +206,22 @@ void deleteAll(TreeNode* root) {
 		free(root);
 	}
 }
+// 删除整棵树的外部封装
 void deleteTree(Tree* tree) {
 	if (isNULL(tree)) {
 		fprintf(stderr, "NullPointerException! Please try again.\n");
 		return;
 	}
 	if (isEmpty(tree)) {
-		fprintf(stderr, "EmptyTreeException! Please try again.\n");
+		puts("Successfully delete the tree!");
 		return;
 	}
-	delete(tree->root);
+	deleteAll(tree->root);
 	tree->root = NULL;
+	puts("Successfully delete the tree!");
 }
 
-// 传入NULL指针
+// 判断是否为NULL
 bool isNULL(Tree* tree) {
 	if (tree != NULL)return false;
 	else return true;
@@ -207,7 +231,7 @@ bool isNULL(TreeNode* tree) {
 	else return true;
 }
 
-// 树为空	
+// 判断树为空	
 bool isEmpty(Tree* tree) {
 	if (tree->root != NULL)return false;
 	else return true;
@@ -215,6 +239,7 @@ bool isEmpty(Tree* tree) {
 
 // 判断传入节点是不是父节点的左节点，是返回true,不是返回false
 bool isLeftChild(TreeNode *treeNode) {
+	if (isNULL(treeNode->parent->left)) return false;
 	if (treeNode->parent->left->value == treeNode->value) return true;
 	else return false;
 }
@@ -332,7 +357,7 @@ void levelOrder(TreeNode* tree) {
 		}
 	}
 }
-
+// 遍历单元的外部封装
 void traverseCell(Tree* tree, void(*pfunc)(TreeNode* root)) {
 	if (isNULL(tree)) {
 		fprintf(stderr, "NullPointerException! Please try again.\n");
