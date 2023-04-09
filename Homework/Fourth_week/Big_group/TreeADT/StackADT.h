@@ -1,4 +1,9 @@
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#include <time.h>
 // 树节点
 typedef struct TreeNode {
     int value;
@@ -32,11 +37,7 @@ typedef struct node Node;
 
 typedef struct node* Stack; // 栈类型
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <windows.h>
-#include <time.h>
+
 
 
 
@@ -54,13 +55,15 @@ Stack createStack() {// 创建一个空栈
     return s;
 
 }
-
-int isEmpty(Stack* s) { // 判断栈是否为空
+bool isNULLL(TreeNode* tree) {
+    if (tree != NULL)return false;
+    else return true;
+}
+bool isEmpty(Stack* s) { // 判断栈是否为空
     if ((*s) == NULL) {
-        printf("NullPointerException! Please try again!\n");
-        return -1;
+        return 1;
     }
-    return isnan((*s)->item.data);
+    return isNULLL((*s)->item.data);
 }// 判断栈是否为空
 
 int countStack(Stack* s) { // 计算栈中元素个数
@@ -97,7 +100,7 @@ void deleteStack(Stack* s) { // 删除栈
     }
     free(*s); // 释放头结点的空间
     *s = NULL;
-    printf("Done!\n");
+    //printf("Done!\n");
 }
 
 void pushStack(Stack* s, Item newItem) { // 入栈
@@ -107,7 +110,7 @@ void pushStack(Stack* s, Item newItem) { // 入栈
     }
     else if (isEmpty(s)) {
         (*s)->item = newItem;
-        puts("New data pushed in!");
+        //puts("New data pushed in!");
         return;
     }
     else {
@@ -120,7 +123,7 @@ void pushStack(Stack* s, Item newItem) { // 入栈
         p->item = newItem; // 指定数据域数值
         p->next = (*s); // 将新结点插入到头结点上面
         (*s) = p; // 更新头节点
-        puts("New data pushed in!");
+        //puts("New data pushed in!");
     }
 }
 
@@ -130,7 +133,7 @@ Item popStack(Stack* s) { // 出栈
         return Item(NULL);
     }
     else if (isEmpty(s)) {
-        printf("EmptyStackException! Please try again!\n");
+        //printf("EmptyStackException! Please try again!\n");
         return Item(NULL);
     }
     else if ((*s)->next == NULL) {
