@@ -7,15 +7,14 @@
 //#ifndef _TREEADT_H_
 //#define _TREEADT_H_
 #include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
 #include <queue>
 #include "StackADT.h"
+#include <windows.h>
 #define MAXSIZE 100
 using namespace std;
 
 // 初始化
-void initTree(Tree *tree);
+void initTree(Tree **tree);
 // 查找
 TreeNode *searchNode(Tree *tree, int value);
 // 插入
@@ -32,25 +31,35 @@ void levelOrder(TreeNode *root);
 void preOrderIterative(TreeNode *root);
 void inOrderIterative(TreeNode *root);
 void postOrderIterative(TreeNode *root);
-// 非递归层序遍历
-void levelOrderIterative(TreeNode *root);
+
 //#endif
 bool isNULL(Tree* tree);
 bool isEmpty(Tree* tree);
 bool isLeftChild(TreeNode* treeNode);
 bool isNULL(TreeNode* tree);
-
-void initTree(Tree *tree) {
-	tree->root = NULL;
+void deleteAll(TreeNode* root);
+void deleteTree(Tree* tree);
+void traverseCell(Tree* tree, void(*pfunc)(TreeNode* root));
+void initTree(Tree **tree) {
+	if (isNULL(*tree)) {
+		*tree = (Tree*)malloc(sizeof(Tree));
+		if (*tree == NULL) {
+			fprintf(stderr, "MemoryAllocationException! Please try again.\n");
+			free(tree);
+			return;
+		}
+		(*tree)->root = NULL;
+		puts("A new tree has been initialized.");
+	}
+	else {
+		fprintf(stderr, "ExisitingTreeException! You have already create a tree.\n");
+		return;
+	}
 }
 // 查找
 TreeNode *searchNode(Tree *tree, int value) {
 	if (isNULL(tree)) {
 		fprintf(stderr, "NullPointerException! Please try again.\n");
-		return NULL;
-	}
-	if (isEmpty(tree)) {
-		fprintf(stderr, "EmptyTreeException! Please try again.\n");
 		return NULL;
 	}
 	TreeNode *node = tree->root;
@@ -165,6 +174,27 @@ bool deleteNode(Tree* tree, int value) {
 		node->value = temp->value;
 		deleteNode(tree, temp->value);
 	}
+	return true;
+}
+
+void deleteAll(TreeNode* root) {
+	if (!isNULL(root)) {
+		deleteAll(root->left);
+		deleteAll(root->right);
+		free(root);
+	}
+}
+void deleteTree(Tree* tree) {
+	if (isNULL(tree)) {
+		fprintf(stderr, "NullPointerException! Please try again.\n");
+		return;
+	}
+	if (isEmpty(tree)) {
+		fprintf(stderr, "EmptyTreeException! Please try again.\n");
+		return;
+	}
+	delete(tree->root);
+	tree->root = NULL;
 }
 
 // 传入NULL指针
@@ -225,7 +255,9 @@ void preOrderIterative(TreeNode* root) {
 	
 	while (!isNULL(node) || !isEmpty(stack)) {
 		node = popStack(stack).data;
+		if (isNULL(node))break;
 		printf("%d  ", node->value);
+		
 		if (!isNULL(node->right)) {
 			pushStack(stack, node->right);
 		}
@@ -268,19 +300,20 @@ void postOrderIterative(TreeNode* root) {
 		node = popStack(stack1).data;
 		pushStack(stack2, node);
 
-		if (isNULL(node->left))
+		if (!isNULL(node->left))
 			pushStack(stack1, node->left);
-		if (isNULL(node->right))
+		if (!isNULL(node->right))
 			pushStack(stack1, node->right);
 	}
 
 	while (!isEmpty(stack2))
 	{
 		node = popStack(stack2).data;
-		printf("%d ", node->value);
+		printf("%d  ", node->value);
 	}
 	deleteStack(stack1);
 	deleteStack(stack2);
+	puts("");
 }
 
 // 层序遍历
@@ -298,4 +331,18 @@ void levelOrder(TreeNode* tree) {
 			q.push(node->right);
 		}
 	}
+}
+
+void traverseCell(Tree* tree, void(*pfunc)(TreeNode* root)) {
+	if (isNULL(tree)) {
+		fprintf(stderr, "NullPointerException! Please try again.\n");
+		return ;
+	}
+	if (isEmpty(tree)) {
+		fprintf(stderr, "EmptyTreeException! Please try again.\n");
+		return ;
+	}
+	pfunc(tree->root);
+	puts("");
+	return;
 }

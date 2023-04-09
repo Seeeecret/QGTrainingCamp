@@ -1,1 +1,6 @@
-﻿  TreeADT.vcxproj -> C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Fourth_week\Big_group\TreeADT\x64\Debug\TreeADT.exe
+﻿  TreeADT.cpp
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Fourth_week\Big_group\TreeADT\TreeADTMenu.h(1,1): warning C4005: “_CRT_SECURE_NO_WARNINGS”: 宏重定义
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Fourth_week\Big_group\TreeADT\TreeADTMenu.h(1,1): message : 之前在命令行上声明的“_CRT_SECURE_NO_WARNINGS”
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Fourth_week\Big_group\TreeADT\TreeADTMenu.h(96,19): warning C4838: 从“int”转换到“SHORT”需要收缩转换
+C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Fourth_week\Big_group\TreeADT\TreeADTMenu.h(96,22): warning C4838: 从“int”转换到“SHORT”需要收缩转换
+  TreeADT.vcxproj -> C:\Users\Secret\source\repos\Seeeecret\QGTrainingCamp\Homework\Fourth_week\Big_group\TreeADT\x64\Debug\TreeADT.exe
