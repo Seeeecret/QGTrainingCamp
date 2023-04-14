@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>loginMenu</title>
+    <script src="webjars/Util/Function.js"></script>
     <script src="webjars/jquery/3.6.4/jquery.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="loginMenuCSS.css">
 </head>
 <body>
 
@@ -14,14 +15,16 @@
     <p align="center">
 
         <label for="username"><font face="楷体" size="4" color="#9932cc">Username:</font></label>
-        <input type="text" name="username" id="username">
+        <input type="text" name="username" id="username" value="">
     </p>
     <p align="center">
 
         <label for="password">  <font face="楷体" size="4" color="#9932cc">Password:</font></label>
-        <input type="password" name="password" id="password">
+        <input type="password" name="password" id="password" value="">
     </p>
-
+<p align="center">
+    Remember me:<input type="checkbox" name="remember" id="rememberBtn">
+</p>
     <p align="center">
         <button type="button" id="loginBtn">Login</button>
         <button type="button" id="registerBtn">Register</button>
@@ -32,16 +35,24 @@
 </body>
 <script>
     $(document).ready(function(){
+        $(function () {
+           let usernameCookie = $.cookie("username");
+           let passwordCookie = $.cookie("password");
+           $("#username").attr("value", usernameCookie);
+           $("#password").attr("value", passwordCookie);
+        });
         $("#loginBtn").click(function(){
             let username = $("#username").val();
             let password = $("#password").val();
+            let remember = $("#rememberBtn").prop("checked");
             $.ajax({
                 type: "GET",
                 url: 'http://localhost:8080/MVCDemo_war/user',
                 data: {
                     username: username,
                     password: password,
-                    method: "login"
+                    method: "login",
+                    remember: remember
                 },
                 dataType: "json",
                 success: function(response){
