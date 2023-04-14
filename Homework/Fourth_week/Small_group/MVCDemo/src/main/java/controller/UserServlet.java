@@ -6,11 +6,13 @@ import utils.Mapper;
 import pojo.User;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import static constants.RoleConstants.*;
 
 /**
  * @author Secret
@@ -64,10 +66,20 @@ public class UserServlet extends BaseServlet {
         // 设置响应内容类型
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String remember = request.getParameter("remember");
         User login;
         login = UserService.login(username, password);
         HashMap<String, Object> jsonMap = new HashMap<>();
         if (login != null) {
+            if(TRUE.equals(remember)) {
+                Cookie usernameCookie = new Cookie("username", username);
+                Cookie passwordCookie = new Cookie("password", password);
+                usernameCookie.setMaxAge(60 * 60 * 24 * 7);
+                passwordCookie.setMaxAge(60 * 60 * 24 * 7);
+                response.addCookie(usernameCookie);
+                response.addCookie(passwordCookie);
+
+            }
             jsonMap.put("code", 200);
             jsonMap.put("msg", "登陆成功");
             jsonMap.put("data", login);

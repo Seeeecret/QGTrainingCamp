@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>meritMenu</title>
     <script src="webjars/jquery/3.6.4/jquery.js"></script>
-    <link rel="stylesheet" href="styles2.css">
+    <link rel="stylesheet" href="meritMenuCSS.css">
 </head>
 <body>
 <p id="output"></p>
@@ -21,8 +21,14 @@
 <script>//动态展示数据
 const urlParams = new URLSearchParams(window.location.search);
 const webUsername = urlParams.get('username');
-$(document).ready(function (e) {
+$(document).ready(function () {
     // 发送 Ajax 请求获取数据
+    $(function () {
+        if (webUsername !== localStorage.getItem("username")) {
+            alert("Please login first");
+            window.location.href = "http://localhost:8080/MVCDemo_war/loginMenu.html";
+        }
+    });
     $.ajax({
         url: 'http://localhost:8080/MVCDemo_war/user',
         type: 'get',
@@ -66,7 +72,8 @@ $(document).ready(function (e) {
         });
     });
     $("#QuitBtn").click(function () {
-
+        localStorage.clear();
+        localStorage.removeItem("username");
         window.location.href = "http://localhost:8080/MVCDemo_war/loginMenu.html";
 
     });
