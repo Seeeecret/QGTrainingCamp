@@ -43,6 +43,7 @@ public class MyConnectionPool {
             Connection conn = DriverManager.getConnection(url, username, password);
             long createTime = System.currentTimeMillis();
             conn.setClientInfo("createTime", String.valueOf(createTime));
+//            conn.setClientInfo("isClosed", "false");
             connections.add(conn);
         }
     }
@@ -56,6 +57,7 @@ public class MyConnectionPool {
      */
     private boolean isConnectionValid(Connection conn) throws SQLException {
         if (conn.isClosed()) {
+//            conn.setClientInfo("isClosed", "true");
             return false;
         }
 
@@ -79,7 +81,7 @@ public class MyConnectionPool {
      */
     public synchronized Connection getConnection() throws SQLException {
         while (connections.size() < minIdle) {
-            Connection conn = DriverManager.getConnection(url);
+            Connection conn = DriverManager.getConnection(url, username, password);
             connections.add(conn);
         }
 
@@ -87,13 +89,17 @@ public class MyConnectionPool {
         while (it.hasNext()) {
             Connection conn = it.next();
             if (isConnectionValid(conn)) {
-                it.remove();
+//                it.remove();
                 return conn;
+            }else{
+             if (conn.isClosed()) {
+                    it.remove();
+                }
             }
         }
 
         if (connections.size() < maxActive) {
-            Connection conn = DriverManager.getConnection(url);
+            Connection conn = DriverManager.getConnection(url, username, password);
             return conn;
         }
 
@@ -122,6 +128,7 @@ public class MyConnectionPool {
      * @throws SQLException sqlexception异常
      */
     public synchronized void releaseConnection(Connection conn) throws SQLException {
+        connections.remove(conn);
         if (connections.size() < maxIdle) {
             connections.add(conn);
         } else {
