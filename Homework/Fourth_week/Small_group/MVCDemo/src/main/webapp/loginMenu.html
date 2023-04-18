@@ -36,8 +36,10 @@
 <script>
     $(document).ready(function(){
         $(function () {
-           let usernameCookie = $.cookie("username");
-           let passwordCookie = $.cookie("password");
+           // let usernameCookie = $.cookie("username");
+           // let passwordCookie = $.cookie("password");
+            let usernameCookie = getCookie("username");
+            let passwordCookie = getCookie("password");
            $("#username").attr("value", usernameCookie);
            $("#password").attr("value", passwordCookie);
         });
