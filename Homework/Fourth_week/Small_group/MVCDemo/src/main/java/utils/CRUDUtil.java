@@ -1,8 +1,5 @@
 package utils;
 
-import com.alibaba.druid.pool.DruidDataSourceFactory;
-
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -14,15 +11,15 @@ import java.util.Properties;
  */
 public class CRUDUtil {
 
-    private static DataSource dataSource;
+    private static MyConnectionPool myConnectionPool;
 
     static {
-        Properties druidProperties = new Properties();
+        Properties properties = new Properties();
         InputStream resourceAsStream = null;
         try {
-            resourceAsStream = CRUDUtil.class.getClassLoader().getResourceAsStream("druid.properties");
-            druidProperties.load(resourceAsStream);
-            dataSource = DruidDataSourceFactory.createDataSource(druidProperties);
+            resourceAsStream = CRUDUtil.class.getClassLoader().getResourceAsStream("MyConnectionPool.properties");
+            properties.load(resourceAsStream);
+            myConnectionPool = new MyConnectionPool(properties);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -39,15 +36,6 @@ public class CRUDUtil {
     private CRUDUtil() {
     }
 
-    /**
-     * 获取数据源
-     *
-     * @return {@link DataSource}
-     */
-    public static DataSource getDataSource(){
-        return dataSource;
-    }
-
 
     /**
      * 获得连接
@@ -56,7 +44,7 @@ public class CRUDUtil {
      * @throws SQLException sqlexception异常
      */
     public static Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
+        return myConnectionPool.getConnection();
     }
 
 
@@ -68,9 +56,7 @@ public class CRUDUtil {
      * @throws SQLException sqlexception异常
      */
     public static void close(Connection connection) throws SQLException {
-        if (connection!=null){
-            connection.close();
-        }
+        myConnectionPool.releaseConnection(connection);
     }
 
 
@@ -120,7 +106,7 @@ public class CRUDUtil {
      * @throws SQLException sqlexception异常
      */
     public static void createNewTable(String createTableSQL) throws SQLException {
-        try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement()) {
+        try (Connection connection = myConnectionPool.getConnection(); Statement statement = connection.createStatement()) {
             statement.execute(createTableSQL);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -233,7 +219,7 @@ public class CRUDUtil {
 
         PreparedStatement pstmt = null;
 
-        Connection connection = dataSource.getConnection();
+        Connection connection = myConnectionPool.getConnection();
 
         int result;
 
@@ -375,7 +361,7 @@ public class CRUDUtil {
      * @throws SQLException sqlexception异常
      */
     public static void showTable(String tableName) throws SQLException {
-        Connection connection = dataSource.getConnection();
+        Connection connection = myConnectionPool.getConnection();
         PreparedStatement ps = connection.prepareStatement("select * from " + tableName);
         ResultSet rs = ps.executeQuery();
         CRUDUtil.showResultSet(rs);

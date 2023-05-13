@@ -3,7 +3,7 @@ package service;
 import dao.UserDAO;
 import pojo.User;
 import utils.CRUDUtil;
-
+import utils.MyConnectionPool;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -13,6 +13,7 @@ import java.sql.SQLException;
 public class UserService {
 
     public  static User query(String username) {
+//        User user = new User("username", "password");
         User user = null;
         try (Connection connection = CRUDUtil.getConnection()) {
             user = UserDAO.query(connection, username);
